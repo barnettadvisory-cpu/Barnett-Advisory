@@ -1347,6 +1347,79 @@
         display: none;
       }
     }
+    /* =========================================
+       19. BOOKING MODAL
+    ========================================= */
+    .cal-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,31,61,0.75);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .cal-modal-overlay.open {
+      display: flex;
+    }
+
+    .cal-modal {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .cal-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .cal-modal-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .cal-modal-close {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 0.25rem;
+      border-radius: var(--radius);
+      transition: color var(--transition);
+      line-height: 1;
+    }
+
+    .cal-modal-close:hover {
+      color: var(--navy);
+    }
+
+    .cal-modal-body {
+      flex: 1;
+      overflow: auto;
+      min-height: 500px;
+    }
+
+    .cal-modal-body #my-cal-inline-15min {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      overflow: scroll;
+    }
   </style>
 </head>
 
@@ -1363,7 +1436,7 @@
         <a href="#services" role="listitem">Services</a>
         <a href="#about" role="listitem">About</a>
         <a href="#faq" role="listitem">FAQ</a>
-        <a href="#contact" class="btn btn-gold nav-cta" role="listitem">Book a Call</a>
+        <a href="#" class="btn btn-gold nav-cta open-cal-modal" role="listitem">Book a Call</a>
       </div>
 
       <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
@@ -1377,7 +1450,7 @@
       <a href="#services">Services</a>
       <a href="#about">About</a>
       <a href="#faq">FAQ</a>
-      <a href="#contact" class="btn btn-gold">Book a Call</a>
+      <a href="#" class="btn btn-gold open-cal-modal">Book a Call</a>
     </nav>
   </nav>
 
@@ -1392,7 +1465,7 @@
           <p class="hero-subhead">Barnett Advisory embeds senior HR leadership into growing organizations without the overhead of a full-time hire. You get a direct line to Kody, always.</p>
           <p class="hero-trust">PHR Certified &middot; SHRM-CP &middot; Dayton, OH &middot; Serving clients nationwide</p>
           <div class="hero-cta-row">
-            <a href="#contact" class="btn btn-gold">Start with a Free Discovery Call</a>
+            <a href="#" class="btn btn-gold open-cal-modal">Start with a Free Discovery Call</a>
             <a href="#case-study" class="btn btn-outline-white">See the Work</a>
           </div>
         </div>
@@ -1903,7 +1976,7 @@
         <div class="contact-text fade-in">
           <h2 id="contact-heading">Ready to stop handling HR alone?</h2>
           <p class="contact-subhead">Every engagement starts with a free 30-minute discovery call. No pitch deck, no pressure.</p>
-          <a href="#" class="btn btn-gold">Book Your Free Discovery Call</a>
+          <a href="#" class="btn btn-gold open-cal-modal">Book Your Free Discovery Call</a>
         </div>
 
         <div class="contact-form-wrap fade-in">
@@ -1975,6 +2048,38 @@
       </div>
     </div>
   </footer>
+
+  <!-- =========================================
+       BOOKING MODAL
+  ========================================= -->
+  <div class="cal-modal-overlay" id="cal-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="cal-modal-title">
+    <div class="cal-modal">
+      <div class="cal-modal-header">
+        <span class="cal-modal-title" id="cal-modal-title">Book a Free 15-Minute Discovery Call</span>
+        <button class="cal-modal-close" id="cal-modal-close" aria-label="Close booking modal">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="4" y1="4" x2="18" y2="18"/><line x1="18" y1="4" x2="4" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="cal-modal-body">
+        <div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline-15min"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cal inline embed code begins -->
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "15min", {origin:"https://app.cal.com"});
+    Cal.ns["15min"]("inline", {
+      elementOrSelector:"#my-cal-inline-15min",
+      config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
+      calLink: "kodybarnett/15min",
+    });
+    Cal.ns["15min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+  <!-- Cal inline embed code ends -->
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -2153,6 +2258,39 @@
           }
         });
       }
+
+
+      // =========================================
+      // 7. BOOKING MODAL
+      // =========================================
+      var calOverlay = document.getElementById('cal-modal-overlay');
+      var calClose = document.getElementById('cal-modal-close');
+
+      function openCalModal(e) {
+        if (e) e.preventDefault();
+        calOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        calClose.focus();
+      }
+
+      function closeCalModal() {
+        calOverlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      calClose.addEventListener('click', closeCalModal);
+
+      calOverlay.addEventListener('click', function (e) {
+        if (e.target === calOverlay) closeCalModal();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && calOverlay.classList.contains('open')) closeCalModal();
+      });
+
+      document.querySelectorAll('.open-cal-modal').forEach(function (btn) {
+        btn.addEventListener('click', openCalModal);
+      });
 
     });
   </script>
