@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — Barnett Advisory</title>
+  <meta name="description" content="The page you're looking for doesn't exist. Return to Barnett Advisory's homepage for fractional HR leadership services.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================
+       CSS CUSTOM PROPERTIES
+    ========================================= */
+    :root {
+      --navy: #0C2D5C;
+      --navy-dark: #091F40;
+      --navy-deep: #06111F;
+      --gold: #1E5FAD;
+      --gold-light: #2E72C5;
+      --gray-brand: #787878;
+      --cream: #F9F7F4;
+      --white: #ffffff;
+      --dark: #1A1A1A;
+      --muted: #555555;
+      --border: rgba(12,45,92,0.12);
+      --font-display: 'Montserrat', system-ui, sans-serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --nav-height: 72px;
+      --container-max: 1200px;
+      --radius: 6px;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 20px rgba(0,0,0,0.12);
+      --transition: 250ms ease;
+    }
+
+    /* =========================================
+       RESET AND BASE
+    ========================================= */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--dark);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* =========================================
+       BUTTONS
+    ========================================= */
+    .btn {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9375rem;
+      padding: 0.8125rem 1.75rem;
+      border-radius: var(--radius);
+      transition: background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+      line-height: 1;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-navy {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+
+    .btn-navy:hover {
+      background: var(--navy-dark);
+      border-color: var(--navy-dark);
+    }
+
+    .btn-outline-navy {
+      background: transparent;
+      color: var(--navy);
+      border-color: var(--navy);
+    }
+
+    .btn-outline-navy:hover {
+      background: rgba(12,45,92,0.05);
+    }
+
+    .btn-gold-solid {
+      background: var(--gold);
+      color: var(--white);
+      border-color: var(--gold);
+    }
+
+    .btn-gold-solid:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+    }
+
+    /* =========================================
+       NAVIGATION
+    ========================================= */
+    .nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: var(--white);
+      height: var(--nav-height);
+      box-shadow: 0 1px 0 rgba(12,45,92,0.07), 0 4px 24px rgba(12,45,92,0.06);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .nav-wordmark {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      text-decoration: none;
+    }
+
+    .nav-logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--navy);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .nav-logo-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-logo-sub {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--gray-brand);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-cta-link {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--radius);
+      background: var(--navy);
+      color: var(--white);
+      transition: background var(--transition), transform var(--transition);
+    }
+
+    .nav-cta-link:hover {
+      background: var(--navy-dark);
+      transform: translateY(-1px);
+    }
+
+    /* =========================================
+       404 MAIN SECTION
+    ========================================= */
+    .not-found {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: calc(var(--nav-height) + 4rem) 1.5rem 5rem;
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background texture lines */
+    .not-found::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(12,45,92,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(12,45,92,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .not-found-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* The big 404 number */
+    .not-found-code {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(7rem, 20vw, 12rem);
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(12,45,92,0.15);
+      letter-spacing: -0.04em;
+      user-select: none;
+      margin-bottom: 0.25rem;
+      position: relative;
+    }
+
+    .not-found-code::after {
+      content: '404';
+      position: absolute;
+      inset: 0;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(7rem, 20vw, 12rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: transparent;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--gold-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.12;
+    }
+
+    .not-found-eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .not-found-heading {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.625rem, 4vw, 2.25rem);
+      line-height: 1.2;
+      color: var(--navy);
+      margin-bottom: 1rem;
+    }
+
+    .not-found-body {
+      font-family: var(--font-body);
+      font-size: 1.0625rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .not-found-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Quick links panel */
+    .not-found-links {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(12,45,92,0.08), 0 0 0 1px rgba(12,45,92,0.06);
+      padding: 2rem;
+      text-align: left;
+    }
+
+    .not-found-links-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-brand);
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .quick-links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.625rem;
+    }
+
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+      text-decoration: none;
+    }
+
+    .quick-link:hover {
+      background: var(--white);
+      border-color: rgba(12,45,92,0.22);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quick-link-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: rgba(12,45,92,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--navy);
+    }
+
+    .quick-link:hover .quick-link-icon {
+      background: rgba(12,45,92,0.12);
+    }
+
+    .quick-link-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .quick-link-title {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .quick-link-desc {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+    .footer {
+      background: var(--navy-deep);
+      color: var(--white);
+      padding: 1.75rem 0;
+    }
+
+    .footer-bottom-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-copyright {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer-legal-links {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .footer-legal-links a {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: rgba(255,255,255,0.4);
+      transition: color var(--transition);
+    }
+
+    .footer-legal-links a:hover {
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* =========================================
+       ANIMATIONS
+    ========================================= */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .not-found-code  { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.05s; }
+    .not-found-eyebrow { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.15s; }
+    .not-found-heading { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.22s; }
+    .not-found-body  { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.3s; }
+    .not-found-actions { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.38s; }
+    .not-found-links { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.46s; }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+    @media (max-width: 640px) {
+      .not-found-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .not-found-actions .btn {
+        text-align: center;
+        width: 100%;
+      }
+
+      .quick-links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================
+       NAVIGATION
+  ========================================= -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-wordmark" aria-label="Barnett Advisory — Home">
+        <div class="nav-logo-mark" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="6" height="6" rx="1.5" fill="white" opacity="0.9"/>
+            <rect x="10" y="2" width="6" height="6" rx="1.5" fill="white" opacity="0.55"/>
+            <rect x="2" y="10" width="6" height="6" rx="1.5" fill="white" opacity="0.55"/>
+            <rect x="10" y="10" width="6" height="6" rx="1.5" fill="white" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="nav-logo-text">
+          <span class="nav-logo-name">Barnett Advisory</span>
+          <span class="nav-logo-sub">Fractional HR Leadership</span>
+        </div>
+      </a>
+      <a href="/" class="nav-cta-link">Back to Home</a>
+    </div>
+  </nav>
+
+  <!-- =========================================
+       404 CONTENT
+  ========================================= -->
+  <main class="not-found" role="main">
+    <div class="not-found-inner">
+
+      <p class="not-found-code" aria-hidden="true">404</p>
+
+      <span class="not-found-eyebrow">Page Not Found</span>
+
+      <h1 class="not-found-heading">
+        This page doesn't exist.<br>Your HR strategy should.
+      </h1>
+
+      <p class="not-found-body">
+        The URL you followed may be outdated, mistyped, or no longer active.
+        The rest of the site is working fine. Start from the homepage or jump
+        directly to what you need.
+      </p>
+
+      <div class="not-found-actions">
+        <a href="/" class="btn btn-navy">Return to Homepage</a>
+        <a href="/#contact" class="btn btn-outline-navy">Schedule a Discovery Call</a>
+      </div>
+
+      <div class="not-found-links">
+        <span class="not-found-links-label">Or go directly to</span>
+        <div class="quick-links-grid">
+
+          <a href="/#services" class="quick-link">
+            <div class="quick-link-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+              </svg>
+            </div>
+            <div class="quick-link-text">
+              <span class="quick-link-title">Services</span>
+              <span class="quick-link-desc">Managed HR, fractional leadership, and more</span>
+            </div>
+          </a>
+
+          <a href="/#about" class="quick-link">
+            <div class="quick-link-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="quick-link-text">
+              <span class="quick-link-title">About</span>
+              <span class="quick-link-desc">Our approach and credentials</span>
+            </div>
+          </a>
+
+          <a href="/#health-check" class="quick-link">
+            <div class="quick-link-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <div class="quick-link-text">
+              <span class="quick-link-title">HR Health Check</span>
+              <span class="quick-link-desc">Assess your HR risk in 2 minutes</span>
+            </div>
+          </a>
+
+          <a href="/#contact" class="quick-link">
+            <div class="quick-link-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 4.9 2 2 0 0 1 3.6 2.72h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.32z"/>
+              </svg>
+            </div>
+            <div class="quick-link-text">
+              <span class="quick-link-title">Contact</span>
+              <span class="quick-link-desc">Book a call or send a message</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-bottom-inner">
+        <p class="footer-copyright">&copy; <script>document.write(new Date().getFullYear())</script> Barnett Advisory. All rights reserved.</p>
+        <nav class="footer-legal-links" aria-label="Legal links">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
