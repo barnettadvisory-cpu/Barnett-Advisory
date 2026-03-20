@@ -73,9 +73,11 @@
     ========================================= */
     .btn {
       display: inline-block;
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: 0.9375rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
       padding: 0.8125rem 1.75rem;
       border-radius: var(--radius);
       transition: background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
@@ -110,17 +112,6 @@
       background: rgba(12,45,92,0.05);
     }
 
-    .btn-gold-solid {
-      background: var(--gold);
-      color: var(--white);
-      border-color: var(--gold);
-    }
-
-    .btn-gold-solid:hover {
-      background: var(--gold-light);
-      border-color: var(--gold-light);
-    }
-
     /* =========================================
        NAVIGATION
     ========================================= */
@@ -131,6 +122,13 @@
       z-index: 1000;
       background: var(--white);
       height: var(--nav-height);
+      transition: background 300ms ease, backdrop-filter 300ms ease, box-shadow 300ms ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
       box-shadow: 0 1px 0 rgba(12,45,92,0.07), 0 4px 24px rgba(12,45,92,0.06);
     }
 
@@ -147,58 +145,38 @@
     .nav-wordmark {
       display: flex;
       align-items: center;
-      gap: 0.625rem;
       text-decoration: none;
-    }
-
-    .nav-logo-mark {
-      width: 36px;
-      height: 36px;
-      background: var(--navy);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       flex-shrink: 0;
     }
 
-    .nav-logo-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
+    .nav-logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
     }
 
-    .nav-logo-name {
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 0.9375rem;
-      color: var(--navy);
-      letter-spacing: -0.01em;
-    }
-
-    .nav-logo-sub {
-      font-family: var(--font-body);
-      font-size: 0.65rem;
-      font-weight: 500;
-      color: var(--gray-brand);
-      letter-spacing: 0.08em;
+      font-size: 0.8125rem;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-    }
-
-    .nav-cta-link {
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: 0.875rem;
       padding: 0.6rem 1.25rem;
       border-radius: var(--radius);
       background: var(--navy);
       color: var(--white);
-      transition: background var(--transition), transform var(--transition);
+      border: 2px solid var(--navy);
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
     }
 
-    .nav-cta-link:hover {
+    .nav-back:hover {
       background: var(--navy-dark);
+      border-color: var(--navy-dark);
       transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
     }
 
     /* =========================================
@@ -215,7 +193,7 @@
       overflow: hidden;
     }
 
-    /* Background texture lines */
+    /* Background grid texture */
     .not-found::before {
       content: '';
       position: absolute;
@@ -227,26 +205,39 @@
       pointer-events: none;
     }
 
+    /* Subtle radial glow */
+    .not-found::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(30,95,173,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
     .not-found-inner {
       position: relative;
       z-index: 1;
-      max-width: 680px;
+      max-width: 700px;
       width: 100%;
       text-align: center;
     }
 
-    /* The big 404 number */
+    /* Big 404 number */
     .not-found-code {
       font-family: var(--font-display);
       font-weight: 700;
       font-size: clamp(7rem, 20vw, 12rem);
       line-height: 1;
-      color: transparent;
-      -webkit-text-stroke: 2px rgba(12,45,92,0.15);
       letter-spacing: -0.04em;
       user-select: none;
       margin-bottom: 0.25rem;
       position: relative;
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(12,45,92,0.1);
     }
 
     .not-found-code::after {
@@ -258,31 +249,42 @@
       font-size: clamp(7rem, 20vw, 12rem);
       line-height: 1;
       letter-spacing: -0.04em;
-      color: transparent;
       background: linear-gradient(135deg, var(--navy) 0%, var(--gold-light) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      opacity: 0.12;
+      opacity: 0.14;
     }
 
     .not-found-eyebrow {
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--gold);
-      display: block;
       margin-bottom: 1rem;
+    }
+
+    .not-found-eyebrow::before,
+    .not-found-eyebrow::after {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
     }
 
     .not-found-heading {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: clamp(1.625rem, 4vw, 2.25rem);
+      font-size: clamp(1.625rem, 4vw, 2.375rem);
       line-height: 1.2;
-      color: var(--navy);
+      color: var(--navy-deep);
       margin-bottom: 1rem;
     }
 
@@ -307,17 +309,17 @@
     /* Quick links panel */
     .not-found-links {
       background: var(--white);
-      border-radius: 12px;
-      box-shadow: 0 4px 24px rgba(12,45,92,0.08), 0 0 0 1px rgba(12,45,92,0.06);
+      border-radius: 14px;
+      box-shadow: 0 8px 32px rgba(12,45,92,0.08), 0 0 0 1px rgba(12,45,92,0.06);
       padding: 2rem;
       text-align: left;
     }
 
     .not-found-links-label {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--gray-brand);
       margin-bottom: 1.25rem;
@@ -326,7 +328,7 @@
 
     .quick-links-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 0.625rem;
     }
 
@@ -334,31 +336,32 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      padding: 0.875rem 1rem;
-      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      border-radius: 10px;
       border: 1px solid var(--border);
       background: var(--cream);
-      transition: background var(--transition), border-color var(--transition), transform var(--transition);
+      transition: background var(--transition), border-color var(--transition), transform var(--transition), box-shadow var(--transition);
       text-decoration: none;
     }
 
     .quick-link:hover {
       background: var(--white);
-      border-color: rgba(12,45,92,0.22);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
+      border-color: rgba(12,45,92,0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(12,45,92,0.08);
     }
 
     .quick-link-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
       background: rgba(12,45,92,0.07);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       color: var(--navy);
+      transition: background var(--transition);
     }
 
     .quick-link:hover .quick-link-icon {
@@ -372,8 +375,8 @@
     }
 
     .quick-link-title {
-      font-family: var(--font-body);
-      font-weight: 600;
+      font-family: var(--font-display);
+      font-weight: 700;
       font-size: 0.875rem;
       color: var(--navy);
       line-height: 1.2;
@@ -391,8 +394,7 @@
     ========================================= */
     .footer {
       background: var(--navy-deep);
-      color: var(--white);
-      padding: 1.75rem 0;
+      padding: 1.5rem 0;
     }
 
     .footer-bottom-inner {
@@ -429,16 +431,16 @@
        ANIMATIONS
     ========================================= */
     @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    .not-found-code  { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.05s; }
-    .not-found-eyebrow { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.15s; }
-    .not-found-heading { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.22s; }
-    .not-found-body  { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.3s; }
-    .not-found-actions { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.38s; }
-    .not-found-links { animation: fadeSlideUp 0.5s ease both; animation-delay: 0.46s; }
+    .not-found-code     { animation: fadeSlideUp 0.55s cubic-bezier(0.16,1,0.3,1) both; animation-delay: 0.05s; }
+    .not-found-eyebrow  { animation: fadeSlideUp 0.55s cubic-bezier(0.16,1,0.3,1) both; animation-delay: 0.15s; }
+    .not-found-heading  { animation: fadeSlideUp 0.55s cubic-bezier(0.16,1,0.3,1) both; animation-delay: 0.22s; }
+    .not-found-body     { animation: fadeSlideUp 0.55s cubic-bezier(0.16,1,0.3,1) both; animation-delay: 0.30s; }
+    .not-found-actions  { animation: fadeSlideUp 0.55s cubic-bezier(0.16,1,0.3,1) both; animation-delay: 0.38s; }
+    .not-found-links    { animation: fadeSlideUp 0.55s cubic-bezier(0.16,1,0.3,1) both; animation-delay: 0.46s; }
 
     /* =========================================
        RESPONSIVE
@@ -472,23 +474,17 @@
   <!-- =========================================
        NAVIGATION
   ========================================= -->
-  <nav class="nav" role="navigation" aria-label="Main navigation">
+  <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="/" class="nav-wordmark" aria-label="Barnett Advisory — Home">
-        <div class="nav-logo-mark" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="2" y="2" width="6" height="6" rx="1.5" fill="white" opacity="0.9"/>
-            <rect x="10" y="2" width="6" height="6" rx="1.5" fill="white" opacity="0.55"/>
-            <rect x="2" y="10" width="6" height="6" rx="1.5" fill="white" opacity="0.55"/>
-            <rect x="10" y="10" width="6" height="6" rx="1.5" fill="white" opacity="0.3"/>
-          </svg>
-        </div>
-        <div class="nav-logo-text">
-          <span class="nav-logo-name">Barnett Advisory</span>
-          <span class="nav-logo-sub">Fractional HR Leadership</span>
-        </div>
+        <img src="https://images.barnett-advisory.com/Hosted/Logo_Color_HZ.png" alt="Barnett Advisory" class="nav-logo-img">
       </a>
-      <a href="/" class="nav-cta-link">Back to Home</a>
+      <a href="/" class="nav-back">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Back to Home
+      </a>
     </div>
   </nav>
 
@@ -508,7 +504,7 @@
 
       <p class="not-found-body">
         The URL you followed may be outdated, mistyped, or no longer active.
-        The rest of the site is working fine. Start from the homepage or jump
+        The rest of the site is working fine — start from the homepage or jump
         directly to what you need.
       </p>
 
@@ -529,7 +525,7 @@
             </div>
             <div class="quick-link-text">
               <span class="quick-link-title">Services</span>
-              <span class="quick-link-desc">Managed HR, fractional leadership, and more</span>
+              <span class="quick-link-desc">Fractional HR, compliance, talent &amp; more</span>
             </div>
           </a>
 
@@ -540,8 +536,8 @@
               </svg>
             </div>
             <div class="quick-link-text">
-              <span class="quick-link-title">About</span>
-              <span class="quick-link-desc">Our approach and credentials</span>
+              <span class="quick-link-title">About Kody</span>
+              <span class="quick-link-desc">PHR Certified · SHRM-CP · credentials</span>
             </div>
           </a>
 
@@ -560,7 +556,7 @@
           <a href="/#contact" class="quick-link">
             <div class="quick-link-icon" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5 19.79 19.79 0 0 1 1.61 4.9 2 2 0 0 1 3.6 2.72h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.1a16 16 0 0 0 6 6l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.32z"/>
+                <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
               </svg>
             </div>
             <div class="quick-link-text">
@@ -581,14 +577,28 @@
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-bottom-inner">
-        <p class="footer-copyright">&copy; <script>document.write(new Date().getFullYear())</script> Barnett Advisory. All rights reserved.</p>
+        <p class="footer-copyright">&copy; 2026 Barnett Advisory LLC. All rights reserved.</p>
         <nav class="footer-legal-links" aria-label="Legal links">
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/terms">Terms of Service</a>
+          <a href="/#contact">Privacy Policy</a>
+          <a href="/#contact">Terms of Service</a>
         </nav>
       </div>
     </div>
   </footer>
+
+  <script>
+    // Nav scrolled state (matches index.html behavior)
+    var nav = document.getElementById('main-nav');
+    function updateNav() {
+      if (window.scrollY > 10) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+    window.addEventListener('scroll', updateNav, { passive: true });
+    updateNav();
+  </script>
 
 </body>
 </html>
