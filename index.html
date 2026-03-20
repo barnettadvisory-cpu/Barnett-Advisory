@@ -7,24 +7,25 @@
   <meta name="description" content="Barnett Advisory embeds senior HR leadership into growing organizations without the overhead of a full-time hire. PHR Certified, SHRM-CP. Serving clients nationwide.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* =========================================
        1. CSS CUSTOM PROPERTIES
     ========================================= */
     :root {
-      --navy: #1F4788;
-      --navy-dark: #172f5e;
-      --navy-deep: #0f1f3d;
-      --gold: #D4AF37;
-      --gold-light: #e8c84a;
+      --navy: #0C2D5C;
+      --navy-dark: #091F40;
+      --navy-deep: #06111F;
+      --gold: #1E5FAD;
+      --gold-light: #2E72C5;
+      --gray-brand: #787878;
       --cream: #F9F7F4;
       --white: #ffffff;
       --dark: #1A1A1A;
       --muted: #555555;
-      --border: rgba(31,71,136,0.12);
-      --font-display: 'EB Garamond', Georgia, serif;
+      --border: rgba(12,45,92,0.12);
+      --font-display: 'Montserrat', system-ui, sans-serif;
       --font-body: 'DM Sans', system-ui, sans-serif;
       --nav-height: 72px;
       --container-max: 1200px;
@@ -109,14 +110,14 @@
     }
 
     .btn-gold {
-      background: var(--gold);
+      background: var(--white);
       color: var(--navy);
-      border-color: var(--gold);
+      border-color: var(--white);
     }
 
     .btn-gold:hover {
-      background: var(--gold-light);
-      border-color: var(--gold-light);
+      background: #e8eef7;
+      border-color: #e8eef7;
     }
 
     .btn-outline-white {
@@ -144,9 +145,9 @@
       font-family: var(--font-body);
       font-size: 0.8125rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--gray-brand);
       display: block;
       margin-bottom: 0.75rem;
     }
@@ -177,11 +178,14 @@
       z-index: 1000;
       background: var(--white);
       height: var(--nav-height);
-      transition: box-shadow var(--transition);
+      transition: background 300ms ease, backdrop-filter 300ms ease, box-shadow 300ms ease;
     }
 
     .nav.scrolled {
-      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 1px 0 rgba(12,45,92,0.07), 0 4px 24px rgba(12,45,92,0.06);
     }
 
     .nav-inner {
@@ -192,39 +196,329 @@
       max-width: var(--container-max);
       margin: 0 auto;
       padding: 0 1.5rem;
+      position: relative;
     }
 
     .nav-wordmark {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.375rem;
-      color: var(--navy);
-      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      flex-shrink: 0;
     }
 
+    .nav-logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+
+    /* ---- Desktop nav links container ---- */
     .nav-links {
       display: none;
       align-items: center;
-      gap: 2rem;
+      gap: 0.25rem;
     }
 
-    .nav-links a {
+    @media (min-width: 900px) {
+      .nav-links { display: flex; }
+    }
+
+    /* ---- Nav item (wrapper for trigger + panel) ---- */
+    .nav-item {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-item.has-mega {
+      position: static;
+    }
+
+    /* ---- Trigger button (styled like a link) ---- */
+    .nav-trigger {
       font-family: var(--font-body);
       font-size: 0.9375rem;
       font-weight: 500;
       color: var(--dark);
-      transition: color var(--transition);
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius);
+      transition: color var(--transition), background var(--transition);
+      white-space: nowrap;
     }
 
-    .nav-links a:hover {
+    .nav-trigger:hover {
       color: var(--navy);
+      background: rgba(12,45,92,0.05);
     }
+
+    .nav-item.open > .nav-trigger {
+      color: var(--navy);
+      background: rgba(12,45,92,0.06);
+    }
+
+    .nav-chevron {
+      width: 12px;
+      height: 12px;
+      transition: transform 250ms cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .nav-item.open .nav-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* ---- Direct link (FAQ, etc.) ---- */
+    .nav-direct-link {
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--dark);
+      text-decoration: none;
+      padding: 0.35rem 0.75rem;
+      border-radius: var(--radius);
+      transition: color var(--transition), background var(--transition);
+      white-space: nowrap;
+    }
+
+    .nav-direct-link:hover {
+      color: var(--navy);
+      background: rgba(12,45,92,0.05);
+    }
+
+    .nav-direct-link.nav-active { color: var(--navy); font-weight: 600; }
 
     .nav-cta {
       font-size: 0.875rem;
-      padding: 0.625rem 1.25rem;
+      padding: 0.6rem 1.25rem;
+      margin-left: 0.5rem;
     }
 
+    /* ---- MEGA PANEL ---- */
+    .mega-panel {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      padding-top: 10px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity 220ms ease, transform 220ms cubic-bezier(0.16,1,0.3,1);
+      z-index: 900;
+    }
+
+    .nav-item.open .mega-panel {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .mega-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 260px;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: 0 20px 64px rgba(12,45,92,0.15), 0 0 0 1px rgba(12,45,92,0.06);
+      overflow: hidden;
+    }
+
+    .mega-col {
+      padding: 1.625rem 1.5rem;
+    }
+
+    .mega-col:not(:last-child) {
+      border-right: 1px solid rgba(12,45,92,0.06);
+    }
+
+    .mega-col-featured {
+      background: var(--navy);
+      padding: 1.625rem 1.5rem;
+    }
+
+    .mega-col-label {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-brand, #787878);
+      margin-bottom: 0.875rem;
+      display: block;
+    }
+
+    .mega-col-featured .mega-col-label {
+      color: rgba(255,255,255,0.45);
+    }
+
+    .mega-link {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      padding: 0.5rem 0.5rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 180ms ease;
+      margin: 0 -0.5rem;
+    }
+
+    .mega-link:hover { background: rgba(12,45,92,0.05); }
+
+    .mega-link-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      background: rgba(12,45,92,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--navy);
+      transition: background 180ms ease;
+      margin-top: 1px;
+    }
+
+    .mega-link:hover .mega-link-icon { background: rgba(12,45,92,0.12); }
+    .mega-link-icon-accent { background: rgba(30,95,173,0.12); }
+    .mega-link:hover .mega-link-icon-accent { background: rgba(30,95,173,0.2); }
+
+    .mega-link-body { display: flex; flex-direction: column; }
+
+    .mega-link-title {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.8375rem;
+      color: var(--navy);
+      line-height: 1.3;
+      transition: color 180ms ease;
+    }
+
+    .mega-link-cta .mega-link-title { color: var(--gold); }
+
+    .mega-link-desc {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-top: 0.1rem;
+    }
+
+    /* Featured column cards */
+    .mega-feat-card {
+      display: block;
+      padding: 0.875rem;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 0.5rem;
+      transition: background 200ms ease, border-color 200ms ease;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .mega-feat-card:last-child { margin-bottom: 0; }
+
+    .mega-feat-card:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .mega-feat-card-title {
+      display: block;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.8125rem;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+    }
+
+    .mega-feat-card-desc {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.45;
+      margin-bottom: 0.375rem;
+    }
+
+    .mega-feat-card-cta {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.02em;
+      transition: color 200ms ease;
+    }
+
+    .mega-feat-card:hover .mega-feat-card-cta { color: rgba(255,255,255,0.8); }
+
+    /* ---- SIMPLE DROPDOWN PANEL ---- */
+    .dropdown-panel {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      min-width: 210px;
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 16px 48px rgba(12,45,92,0.13), 0 0 0 1px rgba(12,45,92,0.06);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 200ms cubic-bezier(0.16,1,0.3,1);
+      z-index: 901;
+      padding: 0.5rem;
+    }
+
+    .nav-item.open .dropdown-panel {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .dropdown-link {
+      display: block;
+      padding: 0.6rem 0.875rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--dark);
+      transition: background 180ms ease, color 180ms ease;
+      white-space: nowrap;
+    }
+
+    .dropdown-link:hover {
+      background: rgba(12,45,92,0.05);
+      color: var(--navy);
+    }
+
+    /* ---- NAV BACKDROP ---- */
+    .nav-backdrop {
+      position: fixed;
+      inset: 0;
+      top: var(--nav-height, 72px);
+      z-index: 800;
+      pointer-events: none;
+      opacity: 0;
+      background: rgba(6,17,31,0.18);
+      backdrop-filter: blur(1px);
+      -webkit-backdrop-filter: blur(1px);
+      transition: opacity 220ms ease;
+    }
+
+    .nav-backdrop.visible {
+      pointer-events: all;
+      opacity: 1;
+    }
+
+    /* ---- HAMBURGER ---- */
     .nav-hamburger {
       display: flex;
       flex-direction: column;
@@ -233,6 +527,10 @@
       background: none;
       border: none;
       cursor: pointer;
+    }
+
+    @media (min-width: 900px) {
+      .nav-hamburger { display: none; }
     }
 
     .nav-hamburger span {
@@ -244,47 +542,199 @@
       transition: transform var(--transition), opacity var(--transition);
     }
 
-    .nav-hamburger.active span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
+    .nav-hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.active span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    .nav-hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .nav-hamburger.active span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
-
-    .nav-mobile-menu {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--white);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
-      padding: 1.5rem;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .nav-mobile-menu.open {
+    /* =========================================
+       4b. MOBILE OVERLAY (redesigned)
+    ========================================= */
+    .mobile-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--navy-deep, #06111F);
+      z-index: 998;
       display: flex;
+      flex-direction: column;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: opacity 300ms ease, transform 350ms cubic-bezier(0.16,1,0.3,1);
     }
 
-    .nav-mobile-menu a {
+    @media (min-width: 480px) {
+      .mobile-overlay {
+        left: auto;
+        width: min(420px, 100vw);
+        box-shadow: -20px 0 60px rgba(0,0,0,0.4);
+      }
+    }
+
+    .mobile-overlay.open {
+      pointer-events: all;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Header */
+    .mobile-overlay-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.125rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+      height: var(--nav-height, 72px);
+    }
+
+    .mobile-overlay-logo-link { display: flex; align-items: center; }
+
+    .mobile-overlay-logo-img {
+      height: 30px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .mobile-overlay-close {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition);
+      flex-shrink: 0;
+    }
+
+    .mobile-overlay-close:hover {
+      background: rgba(255,255,255,0.15);
+      transform: rotate(90deg);
+    }
+
+    /* Scrollable body */
+    .mobile-nav-body {
+      flex: 1;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Accordion sections */
+    .mobile-section-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.125rem 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 1.1875rem;
+      font-weight: 700;
+      color: var(--white);
+      text-align: left;
+      letter-spacing: -0.01em;
+      transition: color 200ms ease, background 200ms ease;
+    }
+
+    .mobile-section-trigger:hover { background: rgba(255,255,255,0.04); }
+
+    .mobile-section-trigger svg {
+      transition: transform 280ms cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    .mobile-section.open .mobile-section-trigger svg { transform: rotate(180deg); }
+
+    .mobile-section-panel {
+      height: 0;
+      overflow: hidden;
+      transition: height 300ms cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .mobile-section-panel-inner {
+      padding: 0 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mobile-section-group-label {
       font-family: var(--font-body);
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--dark);
-      padding: 0.5rem 0;
-      border-bottom: 1px solid var(--border);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 0.5rem;
+      display: block;
     }
 
-    .nav-mobile-menu .btn {
-      align-self: flex-start;
-      margin-top: 0.5rem;
+    .mobile-section-link {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      padding: 0.375rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: color 180ms ease;
+    }
+
+    .mobile-section-link:last-child { border-bottom: none; }
+    .mobile-section-link:hover { color: var(--white); }
+    .mobile-section-link-cta { color: rgba(255,255,255,0.5); font-style: italic; }
+
+    .mobile-row-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin: 0;
+    }
+
+    .mobile-direct-link {
+      display: block;
+      padding: 1.125rem 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1.1875rem;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: background 200ms ease, color 200ms ease;
+    }
+
+    .mobile-direct-link:hover {
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.75);
+    }
+
+    .mobile-cta-section {
+      padding: 1.5rem;
+      margin-top: auto;
+    }
+
+    .mobile-cta-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.75rem;
+    }
+
+    .mobile-cta-sub {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      margin-top: 0.75rem;
     }
 
     /* =========================================
@@ -335,7 +785,7 @@
       font-weight: 600;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: rgba(255,255,255,0.65);
       margin-bottom: 2rem;
     }
 
@@ -351,37 +801,23 @@
       justify-content: center;
     }
 
-    .headshot-placeholder {
-      background: linear-gradient(160deg, #2a5c9e 0%, #1a3a6e 60%, #0f2347 100%);
-      border: 2px solid var(--gold);
-      border-radius: var(--radius);
-      aspect-ratio: 3/4;
+    .headshot-photo {
       width: 100%;
       max-width: 280px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
+      border-radius: var(--radius);
+      display: block;
+      object-fit: cover;
+      aspect-ratio: 3/4;
+      box-shadow: var(--shadow-md);
     }
 
-    .headshot-initials {
-      font-family: var(--font-display);
-      font-size: 4.5rem;
-      color: rgba(212,175,55,0.4);
-      line-height: 1;
-    }
-
-    .headshot-name {
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      color: rgba(212,175,55,0.6);
-      text-align: center;
+    .about-headshot-photo {
+      max-width: 300px;
     }
 
     .hero-gold-bar {
-      height: 5px;
-      background: var(--gold);
+      height: 4px;
+      background: rgba(255,255,255,0.15);
       margin-top: 4rem;
     }
 
@@ -519,11 +955,12 @@
       position: absolute;
       top: 1.25rem;
       right: 1.25rem;
-      background: var(--gold);
-      color: var(--navy);
+      background: rgba(255,255,255,0.18);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.35);
       font-family: var(--font-body);
       font-size: 0.75rem;
-      font-weight: 700;
+      font-weight: 600;
       padding: 0.25rem 0.625rem;
       border-radius: 100px;
     }
@@ -559,7 +996,7 @@
     }
 
     .service-card.featured .service-price {
-      color: var(--gold);
+      color: rgba(255,255,255,0.65);
       font-size: 0.9375rem;
     }
 
@@ -592,7 +1029,7 @@
 
     .service-card.featured .service-features li::before {
       content: '✓';
-      color: var(--gold);
+      color: rgba(255,255,255,0.6);
     }
 
     .service-note {
@@ -647,7 +1084,7 @@
 
     .comparison-table th.highlight-col {
       background: var(--gold);
-      color: var(--navy);
+      color: var(--white);
     }
 
     .comparison-table td {
@@ -667,15 +1104,15 @@
     }
 
     .comparison-table td.highlight-col {
-      background: rgba(212,175,55,0.06);
+      background: rgba(30,95,173,0.06);
       font-weight: 500;
     }
 
     .comparison-table tr:nth-child(even) td.highlight-col {
-      background: rgba(212,175,55,0.1);
+      background: rgba(30,95,173,0.10);
     }
 
-    .check-gold { color: var(--gold); font-weight: 700; }
+    .check-gold { color: var(--navy); font-weight: 700; }
     .check-navy { color: var(--navy); font-weight: 700; }
     .check-red { color: #c0392b; font-weight: 700; }
 
@@ -719,7 +1156,7 @@
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 4rem;
-      color: var(--gold);
+      color: var(--white);
       line-height: 1;
       margin-bottom: 0.5rem;
     }
@@ -742,7 +1179,7 @@
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 1.25rem;
-      color: var(--gold);
+      color: rgba(255,255,255,0.85);
       margin-bottom: 0.75rem;
     }
 
@@ -775,14 +1212,14 @@
       background: var(--white);
       border-radius: 8px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      border-top: 3px solid var(--gold);
+      border-top: 3px solid var(--navy);
       padding: 2rem;
     }
 
     .testimonial-quote-mark {
       font-family: var(--font-display);
       font-size: 5rem;
-      color: rgba(212,175,55,0.25);
+      color: rgba(12,45,92,0.18);
       line-height: 0.6;
       margin-bottom: 1rem;
       display: block;
@@ -810,7 +1247,33 @@
     }
 
     /* =========================================
-       12. COMPLIANCE STYLES
+       12. TRUSTED BY STYLES
+    ========================================= */
+    .trusted-by {
+      background: var(--cream);
+    }
+
+    .trusted-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem 3rem;
+      margin-top: 2.5rem;
+    }
+
+    .trusted-logo-name {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray-brand);
+      opacity: 0.7;
+    }
+
+    /* =========================================
+       12b. COMPLIANCE STYLES
     ========================================= */
     .compliance {
       background: var(--white);
@@ -832,7 +1295,8 @@
       font-family: var(--font-display);
       font-weight: 700;
       font-size: 3rem;
-      color: var(--gold);
+      color: var(--navy);
+      opacity: 0.25;
       line-height: 1;
       margin-bottom: 0.875rem;
     }
@@ -886,9 +1350,9 @@
     }
 
     .about-callout {
-      border-left: 4px solid var(--gold);
+      border-left: 4px solid rgba(255,255,255,0.3);
       padding: 1.25rem 1.5rem;
-      background: rgba(212,175,55,0.08);
+      background: rgba(255,255,255,0.07);
       margin-bottom: 1.75rem;
       border-radius: 0 var(--radius) var(--radius) 0;
     }
@@ -908,8 +1372,8 @@
     }
 
     .badge {
-      border: 1px solid var(--gold);
-      color: var(--gold);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.8);
       padding: 0.4rem 0.9rem;
       border-radius: 100px;
       font-size: 0.8125rem;
@@ -922,7 +1386,7 @@
       justify-content: center;
     }
 
-    .about-image .headshot-placeholder {
+    .about-headshot-photo {
       max-width: 260px;
     }
 
@@ -1091,8 +1555,8 @@
       display: none;
       text-align: center;
       padding: 2.5rem;
-      background: rgba(212,175,55,0.1);
-      border: 1px solid rgba(212,175,55,0.3);
+      background: rgba(30,95,173,0.12);
+      border: 1px solid rgba(30,95,173,0.3);
       border-radius: var(--radius);
     }
 
@@ -1103,7 +1567,7 @@
     .contact-success h3 {
       font-family: var(--font-display);
       font-size: 1.5rem;
-      color: var(--gold);
+      color: var(--white);
       margin-bottom: 0.75rem;
     }
 
@@ -1122,70 +1586,410 @@
     }
 
     /* =========================================
-       16. FOOTER STYLES
+       16. FOOTER
     ========================================= */
     .footer {
       background: var(--navy-deep);
-      padding: 3rem 0 0;
+      padding: 4rem 0 0;
     }
 
-    .footer-main {
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Brand column */
+    .footer-brand {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 2rem;
-      text-align: center;
-      padding-bottom: 2rem;
+      gap: 0.75rem;
+    }
+
+    .footer-wordmark-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
     }
 
     .footer-wordmark {
       font-family: var(--font-display);
-      font-size: 1.25rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: var(--white);
       display: block;
-      margin-bottom: 0.25rem;
+    }
+
+    .footer-wordmark-advisory {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      display: block;
     }
 
     .footer-tagline {
       font-family: var(--font-body);
-      font-size: 0.8125rem;
-      color: var(--gold);
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+      max-width: 22ch;
     }
 
-    .footer-nav {
+    .footer-creds-list {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.25rem;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
     }
 
-    .footer-nav a {
+    .footer-cred-badge {
+      font-family: var(--font-body);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      background: rgba(197,160,75,0.12);
+      border: 1px solid rgba(197,160,75,0.25);
+      border-radius: 4px;
+      padding: 0.2rem 0.55rem;
+      white-space: nowrap;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .footer-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+      transition: background var(--transition), color var(--transition), border-color var(--transition);
+    }
+
+    .footer-social-link:hover {
+      background: rgba(197,160,75,0.15);
+      border-color: rgba(197,160,75,0.35);
+      color: var(--gold-light);
+    }
+
+    /* Nav columns */
+    .footer-col-heading {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 1.1rem;
+    }
+
+    .footer-col-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      list-style: none;
+    }
+
+    .footer-col-links a {
       font-family: var(--font-body);
       font-size: 0.875rem;
+      color: rgba(255,255,255,0.65);
+      transition: color var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .footer-col-links a:hover {
+      color: var(--white);
+    }
+
+    .footer-col-links a:hover::before {
+      transform: translateX(3px);
+    }
+
+    /* CTA column */
+    .footer-cta-col {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--gold);
+      color: var(--navy-deep);
+      font-family: var(--font-display);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.5rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      text-align: center;
+      width: 100%;
+    }
+
+    .footer-cta-btn:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(197,160,75,0.3);
+    }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+    }
+
+    .footer-contact-item svg {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--gold-light);
+      opacity: 0.7;
+    }
+
+    .footer-contact-item a {
       color: rgba(255,255,255,0.7);
       transition: color var(--transition);
     }
 
-    .footer-nav a:hover {
+    .footer-contact-item a:hover {
       color: var(--white);
     }
 
-    .footer-credentials {
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      color: rgba(255,255,255,0.6);
+    /* Bottom bar */
+    .footer-bottom {
+      padding: 1.25rem 0;
     }
 
-    .footer-bottom {
-      border-top: 1px solid rgba(212,175,55,0.2);
-      padding: 1.25rem 0;
-      text-align: center;
+    .footer-bottom-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
     }
 
     .footer-copyright {
       font-family: var(--font-body);
       font-size: 0.8125rem;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.4);
+    }
+
+    .footer-legal-links {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .footer-legal-links a {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: rgba(255,255,255,0.4);
+      transition: color var(--transition);
+    }
+
+    .footer-legal-links a:hover {
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* Responsive footer */
+    @media (max-width: 1024px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.5rem;
+      }
+    }
+
+    /* =========================================
+       16b. LOCATION POPUP
+    ========================================= */
+    .location-popup {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: min(360px, calc(100vw - 2rem));
+      background: var(--white);
+      border-radius: 14px;
+      box-shadow: 0 24px 64px rgba(12,45,92,0.18), 0 0 0 1px rgba(12,45,92,0.08);
+      padding: 1.5rem;
+      z-index: 9000;
+      transform: translateY(120%);
+      opacity: 0;
+      transition: transform 500ms cubic-bezier(0.16,1,0.3,1), opacity 400ms ease;
+      pointer-events: none;
+    }
+
+    .location-popup.visible {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .location-popup.dismissing {
+      transform: translateY(120%);
+      opacity: 0;
+    }
+
+    .popup-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(12,45,92,0.06);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--navy);
+      transition: background var(--transition);
+      flex-shrink: 0;
+    }
+
+    .popup-close:hover {
+      background: rgba(12,45,92,0.12);
+    }
+
+    .popup-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-display);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .popup-pulse {
+      width: 7px;
+      height: 7px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulseRing 1.8s ease-out infinite;
+    }
+
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(197,160,75,0.5); }
+      70% { box-shadow: 0 0 0 6px rgba(197,160,75,0); }
+      100% { box-shadow: 0 0 0 0 rgba(197,160,75,0); }
+    }
+
+    .popup-headline {
+      font-family: var(--font-display);
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: var(--navy-deep);
+      line-height: 1.3;
+      margin-bottom: 0.4rem;
+      padding-right: 1.5rem;
+    }
+
+    .popup-body {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--navy);
+      opacity: 0.7;
+      line-height: 1.55;
+      margin-bottom: 1.1rem;
+    }
+
+    .popup-actions {
+      display: flex;
+      gap: 0.65rem;
+      align-items: center;
+    }
+
+    .popup-cta {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy-deep);
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+
+    .popup-cta:hover {
+      background: var(--navy);
+    }
+
+    .popup-dismiss {
+      font-family: var(--font-body);
+      font-size: 0.8125rem;
+      color: rgba(12,45,92,0.45);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: color var(--transition);
+      white-space: nowrap;
+    }
+
+    .popup-dismiss:hover {
+      color: var(--navy);
+    }
+
+    @media (max-width: 480px) {
+      .location-popup {
+        bottom: 1rem;
+        right: 1rem;
+        width: calc(100vw - 2rem);
+      }
     }
 
     /* =========================================
@@ -1260,7 +2064,7 @@
         flex: 0 0 auto;
       }
 
-      .headshot-placeholder {
+      .headshot-photo {
         max-width: 340px;
       }
 
@@ -1297,7 +2101,7 @@
         flex: 0 0 auto;
       }
 
-      .about-image .headshot-placeholder {
+      .about-headshot-photo {
         max-width: 300px;
       }
 
@@ -1420,49 +2224,659 @@
       min-height: 500px;
       overflow: scroll;
     }
+    /* =========================================
+       ENHANCEMENTS — SCROLL PROGRESS
+    ========================================= */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold) 0%, #60a5fa 100%);
+      z-index: 9999;
+      pointer-events: none;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* ENHANCEMENTS — NAV & MOBILE: handled in section 4 / 4b above */
+
+    /* =========================================
+       ENHANCEMENTS — HERO
+    ========================================= */
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-mesh {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 85% 65% at 78% 28%, rgba(30,95,173,0.42) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 70% at 8% 80%, rgba(6,17,31,0.75) 0%, transparent 55%),
+        radial-gradient(ellipse 45% 35% at 50% 5%, rgba(46,114,197,0.18) 0%, transparent 60%);
+    }
+
+    .hero > .container,
+    .hero > .hero-gold-bar {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes heroSlideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1 {
+      animation: heroSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.05s both;
+    }
+
+    .hero .hero-subhead {
+      animation: heroSlideUp 0.85s cubic-bezier(0.16,1,0.3,1) 0.22s both;
+    }
+
+    .hero .hero-trust {
+      animation: heroSlideUp 0.85s cubic-bezier(0.16,1,0.3,1) 0.36s both;
+    }
+
+    .hero .hero-cta-row {
+      animation: heroSlideUp 0.85s cubic-bezier(0.16,1,0.3,1) 0.48s both;
+    }
+
+    .hero .hero-image {
+      animation: heroSlideUp 1s cubic-bezier(0.16,1,0.3,1) 0.26s both;
+    }
+
+    @keyframes floatPhoto {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      35%       { transform: translateY(-10px) rotate(0.4deg); }
+      70%       { transform: translateY(-5px) rotate(-0.2deg); }
+    }
+
+    .headshot-photo {
+      border-radius: 12px;
+      box-shadow: 0 28px 72px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,255,255,0.07);
+      animation: floatPhoto 8s ease-in-out infinite;
+    }
+
+    /* =========================================
+       ENHANCEMENTS — IMPROVED FADE-IN
+    ========================================= */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(32px) scale(0.98);
+      transition: opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* =========================================
+       ENHANCEMENTS — SERVICE CARDS
+    ========================================= */
+    .service-card {
+      transition: transform 320ms cubic-bezier(0.16,1,0.3,1), box-shadow 320ms ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-9px);
+      box-shadow: 0 24px 60px rgba(12,45,92,0.14);
+    }
+
+    .service-card.featured:hover {
+      transform: translateY(-9px);
+      box-shadow: 0 24px 60px rgba(12,45,92,0.5);
+    }
+
+    /* =========================================
+       ENHANCEMENTS — FIT CARDS
+    ========================================= */
+    .fit-card {
+      transition: border-left-color 250ms ease, transform 300ms cubic-bezier(0.16,1,0.3,1), box-shadow 300ms ease, background 250ms ease;
+    }
+
+    .fit-card:hover {
+      transform: translateX(6px);
+      box-shadow: 0 6px 28px rgba(12,45,92,0.09);
+      border-left-color: var(--navy);
+      background: rgba(12,45,92,0.02);
+    }
+
+    /* =========================================
+       ENHANCEMENTS — TESTIMONIAL CARDS
+    ========================================= */
+    .testimonial-card {
+      transition: transform 300ms cubic-bezier(0.16,1,0.3,1), box-shadow 300ms ease;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 24px 56px rgba(12,45,92,0.12);
+    }
+
+    /* =========================================
+       ENHANCEMENTS — PILLAR CARDS
+    ========================================= */
+    .pillar {
+      transition: transform 300ms cubic-bezier(0.16,1,0.3,1);
+      border-radius: var(--radius);
+    }
+
+    .pillar:hover {
+      transform: translateY(-5px);
+    }
+
+    /* =========================================
+       ENHANCEMENTS — TRUSTED BY
+    ========================================= */
+    .trusted-logos:hover .trusted-logo-name {
+      opacity: 0.35;
+    }
+
+    .trusted-logo-name {
+      transition: opacity 250ms ease, color 250ms ease;
+      cursor: default;
+    }
+
+    .trusted-logos .trusted-logo-name:hover {
+      opacity: 1 !important;
+      color: var(--navy);
+    }
+
+    /* =========================================
+       ENHANCEMENTS — SCROLLBAR & SELECTION
+    ========================================= */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: rgba(12,45,92,0.22); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--navy); }
+    ::selection { background: rgba(30,95,173,0.16); color: var(--navy); }
+
+    /* =========================================
+       ENHANCEMENTS — REDUCED MOTION
+    ========================================= */
+    @media (prefers-reduced-motion: reduce) {
+      .hero h1,
+      .hero .hero-subhead,
+      .hero .hero-trust,
+      .hero .hero-cta-row,
+      .hero .hero-image { animation: none; opacity: 1; transform: none; }
+      .headshot-photo { animation: none; }
+      .fade-in { transform: none; transition: opacity 300ms ease; }
+    }
+
+
+    /* ===== SERVICE EXPLORER ===== */
+    .explorer { background: var(--white); }
+    .explorer-intro { text-align: center; color: var(--muted); margin-top: 0.75rem; margin-bottom: 2.5rem; }
+    .explorer-filters { display: flex; flex-direction: column; gap: 1.25rem; margin-bottom: 2.5rem; }
+    .filter-group-label { font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-brand, #787878); margin-bottom: 0.5rem; }
+    .filter-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .filter-pill { font-family: var(--font-body); font-size: 0.8125rem; font-weight: 500; padding: 0.4rem 0.9rem; border-radius: 100px; border: 1.5px solid var(--border, rgba(12,45,92,0.12)); color: var(--muted); background: var(--white); cursor: pointer; transition: all 200ms ease; }
+    .filter-pill:hover { border-color: var(--navy); color: var(--navy); }
+    .filter-pill.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .explorer-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+    @media (min-width: 640px) { .explorer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .explorer-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .explorer-card { background: var(--cream); border-radius: 8px; border-top: 3px solid var(--gold); padding: 1.75rem; transition: transform 300ms cubic-bezier(0.16,1,0.3,1), box-shadow 300ms ease, opacity 300ms ease; }
+    .explorer-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(12,45,92,0.1); }
+    .explorer-card.hidden { display: none; }
+    .explorer-card-tag { font-family: var(--font-body); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .explorer-card-title { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; color: var(--navy); margin-bottom: 0.625rem; line-height: 1.3; }
+    .explorer-card-desc { font-family: var(--font-body); font-size: 0.875rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .explorer-card-deliverables { list-style: none; padding: 0; margin: 0 0 1.25rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .explorer-card-deliverables li { font-family: var(--font-body); font-size: 0.8125rem; color: var(--dark); display: flex; align-items: flex-start; gap: 0.4rem; }
+    .explorer-card-deliverables li::before { content: '→'; color: var(--gold); flex-shrink: 0; font-size: 0.75rem; margin-top: 0.1em; }
+    .explorer-cta-link { font-family: var(--font-body); font-size: 0.8125rem; font-weight: 600; color: var(--navy); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; }
+    .explorer-cta-link::after { content: '→'; transition: transform 200ms ease; }
+    .explorer-cta-link:hover::after { transform: translateX(4px); }
+    .explorer-empty { display: none; text-align: center; padding: 3rem; color: var(--muted); font-family: var(--font-body); font-size: 1rem; width: 100%; }
+    .explorer-empty.visible { display: block; }
+
+    /* ===== HRIS SECTION ===== */
+    .hris { background: var(--cream); }
+    .hris-subhead { text-align: center; color: var(--muted); margin-top: 0.75rem; margin-bottom: 3rem; }
+    .hris-platforms-label { font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-brand, #787878); text-align: center; margin-bottom: 1.5rem; }
+    .hris-platforms { display: flex; flex-wrap: wrap; gap: 0.875rem; justify-content: center; margin-bottom: 3.5rem; }
+    .platform-badge { background: var(--white); border: 1.5px solid rgba(12,45,92,0.12); border-radius: 8px; padding: 0.75rem 1.5rem; font-family: var(--font-display); font-weight: 700; font-size: 0.9375rem; color: var(--navy); transition: all 250ms ease; letter-spacing: -0.01em; cursor: default; }
+    .platform-badge:hover { border-color: var(--navy); box-shadow: 0 4px 16px rgba(12,45,92,0.1); transform: translateY(-2px); }
+    .hris-process-label { font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-brand, #787878); text-align: center; margin-bottom: 2rem; }
+    .hris-process { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 3rem; }
+    @media (min-width: 640px) { .hris-process { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .hris-process { grid-template-columns: repeat(7, 1fr); gap: 0; } }
+    .hris-step { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; padding: 0 0.75rem; }
+    @media (min-width: 1024px) {
+      .hris-step:not(:last-child)::after { content: ''; position: absolute; top: 22px; right: -1px; width: calc(50% + 1px); height: 2px; background: linear-gradient(90deg, var(--gold) 0%, rgba(30,95,173,0.2) 100%); z-index: 0; }
+      .hris-step:not(:first-child)::before { content: ''; position: absolute; top: 22px; left: -1px; width: calc(50% + 1px); height: 2px; background: linear-gradient(270deg, var(--gold) 0%, rgba(30,95,173,0.2) 100%); z-index: 0; }
+    }
+    .hris-step-number { width: 44px; height: 44px; border-radius: 50%; background: var(--navy); color: var(--white); font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; margin-bottom: 0.875rem; flex-shrink: 0; position: relative; z-index: 1; }
+    .hris-step-title { font-family: var(--font-body); font-weight: 700; font-size: 0.8125rem; color: var(--navy); margin-bottom: 0.25rem; line-height: 1.3; }
+    .hris-step-desc { font-family: var(--font-body); font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+    .hris-failure-block { background: var(--navy); border-radius: 8px; padding: 2rem 2rem; margin-bottom: 3rem; }
+    .hris-failure-title { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; color: var(--white); margin-bottom: 1.25rem; }
+    .hris-failure-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+    .hris-failure-list li { font-family: var(--font-body); font-size: 0.9rem; color: rgba(255,255,255,0.85); display: flex; align-items: flex-start; gap: 0.625rem; line-height: 1.5; }
+    .hris-failure-list li::before { content: '✗'; color: #f87171; font-weight: 700; flex-shrink: 0; margin-top: 0.05em; }
+    .hris-fix-cta { background: var(--white); border-radius: 8px; border-left: 4px solid var(--gold); padding: 1.75rem 2rem; display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
+    @media (min-width: 640px) { .hris-fix-cta { flex-direction: row; align-items: center; justify-content: space-between; } }
+    .hris-fix-text h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; color: var(--navy); margin-bottom: 0.25rem; }
+    .hris-fix-text p { font-family: var(--font-body); font-size: 0.9rem; color: var(--muted); line-height: 1.55; }
+
+    /* ===== INDUSTRY SPECIALIZATION ===== */
+    .industries { background: var(--white); }
+    .industry-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 2rem 0 2.5rem; justify-content: center; }
+    .industry-tab { font-family: var(--font-body); font-size: 0.875rem; font-weight: 600; padding: 0.6rem 1.25rem; border-radius: var(--radius, 6px); border: 1.5px solid rgba(12,45,92,0.15); color: var(--muted); background: var(--white); cursor: pointer; transition: all 220ms ease; }
+    .industry-tab:hover { border-color: var(--navy); color: var(--navy); }
+    .industry-tab.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .industry-panels { position: relative; }
+    .industry-panel { display: none; }
+    .industry-panel.active { display: grid; grid-template-columns: 1fr; gap: 1.25rem; animation: panelFadeIn 300ms ease both; }
+    @media (min-width: 768px) { .industry-panel.active { grid-template-columns: 1fr 1fr; } }
+    @keyframes panelFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .industry-challenge-card { background: var(--cream); border-radius: 8px; padding: 1.5rem; border-top: 3px solid var(--gold); }
+    .industry-challenge-card .challenge-number { font-family: var(--font-display); font-weight: 700; font-size: 2rem; color: var(--navy); opacity: 0.12; line-height: 1; margin-bottom: 0.5rem; }
+    .industry-challenge-card .challenge-title { font-family: var(--font-body); font-weight: 700; font-size: 0.9375rem; color: var(--navy); margin-bottom: 0.5rem; }
+    .industry-challenge-card .challenge-problem { font-family: var(--font-body); font-size: 0.875rem; color: var(--muted); line-height: 1.6; margin-bottom: 0.75rem; }
+    .industry-challenge-card .challenge-solution { font-family: var(--font-body); font-size: 0.8125rem; color: var(--dark); line-height: 1.55; padding: 0.75rem; background: rgba(12,45,92,0.04); border-radius: 4px; border-left: 3px solid var(--gold); }
+    .industry-challenge-card .challenge-solution strong { color: var(--navy); }
+
+    /* ===== ENGAGEMENT TIMELINE ===== */
+    .timeline { background: var(--navy); }
+    .timeline .eyebrow { text-align: center; display: block; color: rgba(255,255,255,0.55); }
+    .timeline .section-h2 { color: var(--white); text-align: center; margin-bottom: 0.75rem; }
+    .timeline-subhead { text-align: center; color: rgba(255,255,255,0.7); font-family: var(--font-body); font-size: 1rem; margin-bottom: 3.5rem; }
+    .timeline-track { display: flex; flex-direction: column; gap: 0; position: relative; }
+    @media (min-width: 768px) {
+      .timeline-track { flex-direction: row; align-items: flex-start; }
+      .timeline-track::before { content: ''; position: absolute; top: 22px; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.12); z-index: 0; }
+    }
+    .timeline-step { display: flex; flex-direction: row; gap: 1.25rem; padding: 0 0 2rem; position: relative; }
+    @media (min-width: 768px) {
+      .timeline-step { flex-direction: column; align-items: center; text-align: center; flex: 1; padding: 0 1rem; gap: 1rem; }
+      .timeline-step:not(:last-child)::after { display: none; }
+    }
+    .timeline-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 21px;
+      top: 44px;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255,255,255,0.12);
+    }
+    .timeline-node { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.25); color: var(--white); font-family: var(--font-display); font-weight: 700; font-size: 0.875rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; transition: background 300ms ease, border-color 300ms ease, transform 300ms ease; }
+    .timeline-step:hover .timeline-node { background: var(--gold); border-color: var(--gold); transform: scale(1.1); }
+    .timeline-step-content { flex: 1; }
+    @media (min-width: 768px) { .timeline-step-content { flex: unset; } }
+    .timeline-step-title { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--white); margin-bottom: 0.375rem; }
+    .timeline-step-desc { font-family: var(--font-body); font-size: 0.875rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .timeline-cta { text-align: center; margin-top: 3.5rem; }
+
+    /* ===== HR HEALTH CHECK ===== */
+    .health-check { background: var(--cream); }
+    .health-check-intro { text-align: center; color: var(--muted); margin-top: 0.75rem; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .health-check-widget { max-width: 700px; margin: 0 auto; background: var(--white); border-radius: 10px; box-shadow: 0 4px 24px rgba(12,45,92,0.08); padding: 2.5rem; }
+    .hc-progress-bar-wrap { background: rgba(12,45,92,0.08); border-radius: 100px; height: 4px; margin-bottom: 2rem; overflow: hidden; }
+    .hc-progress-bar { height: 100%; background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 100%); border-radius: 100px; transition: width 400ms cubic-bezier(0.16,1,0.3,1); }
+    .hc-step { display: none; }
+    .hc-step.active { display: block; animation: panelFadeIn 280ms ease both; }
+    .hc-step-label { font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-brand, #787878); margin-bottom: 0.5rem; }
+    .hc-question { font-family: var(--font-display); font-weight: 700; font-size: 1.1875rem; color: var(--navy); line-height: 1.35; margin-bottom: 0.5rem; }
+    .hc-question-sub { font-family: var(--font-body); font-size: 0.875rem; color: var(--muted); margin-bottom: 1.75rem; line-height: 1.5; }
+    .hc-options { display: flex; flex-direction: column; gap: 0.625rem; }
+    .hc-option { display: flex; align-items: center; gap: 0.875rem; padding: 0.875rem 1rem; border: 1.5px solid rgba(12,45,92,0.12); border-radius: var(--radius, 6px); cursor: pointer; transition: all 200ms ease; font-family: var(--font-body); font-size: 0.9375rem; color: var(--dark); background: var(--white); text-align: left; width: 100%; }
+    .hc-option:hover { border-color: var(--navy); background: rgba(12,45,92,0.03); }
+    .hc-option.selected { border-color: var(--navy); background: rgba(12,45,92,0.06); color: var(--navy); font-weight: 500; }
+    .hc-option-dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid rgba(12,45,92,0.25); flex-shrink: 0; transition: all 200ms ease; }
+    .hc-option.selected .hc-option-dot { background: var(--navy); border-color: var(--navy); }
+    .hc-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; }
+    .hc-step-counter { font-family: var(--font-body); font-size: 0.8125rem; color: var(--muted); }
+    .hc-btn-next { font-family: var(--font-body); font-weight: 600; font-size: 0.9375rem; padding: 0.75rem 1.75rem; border-radius: var(--radius, 6px); background: var(--navy); color: var(--white); border: none; cursor: pointer; transition: background 200ms ease, transform 200ms ease; }
+    .hc-btn-next:hover:not(:disabled) { background: var(--navy-dark, #091F40); transform: translateY(-1px); }
+    .hc-btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+    .hc-result { display: none; text-align: center; }
+    .hc-result.visible { display: block; animation: panelFadeIn 400ms ease both; }
+    .hc-risk-badge { display: inline-block; font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; padding: 0.625rem 2rem; border-radius: 100px; margin-bottom: 1.5rem; }
+    .hc-risk-low { background: rgba(16,185,129,0.1); color: #065f46; }
+    .hc-risk-moderate { background: rgba(245,158,11,0.12); color: #92400e; }
+    .hc-risk-high { background: rgba(239,68,68,0.1); color: #991b1b; }
+    .hc-result-summary { font-family: var(--font-body); font-size: 1rem; color: var(--muted); line-height: 1.7; max-width: 520px; margin: 0 auto 2rem; }
+    .hc-restart { background: none; border: none; font-family: var(--font-body); font-size: 0.875rem; color: var(--muted); cursor: pointer; margin-top: 1rem; text-decoration: underline; display: block; margin: 1rem auto 0; }
+
+    /* ===== ROI CALCULATOR ===== */
+    .roi-calc { background: var(--white); }
+    .roi-calc-subhead { text-align: center; color: var(--muted); margin-top: 0.75rem; margin-bottom: 3rem; }
+    .roi-widget { max-width: 760px; margin: 0 auto; }
+    .roi-inputs { display: grid; grid-template-columns: 1fr; gap: 1.5rem; background: var(--cream); border-radius: 10px; padding: 2rem; margin-bottom: 2rem; }
+    @media (min-width: 600px) { .roi-inputs { grid-template-columns: 1fr 1fr; } }
+    .roi-input-group label { font-family: var(--font-body); font-weight: 600; font-size: 0.875rem; color: var(--navy); display: block; margin-bottom: 0.5rem; }
+    .roi-input-group input { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid rgba(12,45,92,0.15); border-radius: var(--radius, 6px); font-family: var(--font-body); font-size: 1rem; color: var(--dark); background: var(--white); transition: border-color 200ms ease; }
+    .roi-input-group input:focus { outline: none; border-color: var(--navy); }
+    .roi-input-sub { font-family: var(--font-body); font-size: 0.75rem; color: var(--muted); margin-top: 0.375rem; }
+    .roi-calc-btn { display: block; width: 100%; font-family: var(--font-body); font-weight: 700; font-size: 1rem; padding: 0.9375rem; border-radius: var(--radius, 6px); background: var(--navy); color: var(--white); border: none; cursor: pointer; transition: background 200ms ease, transform 200ms ease; margin-bottom: 2rem; }
+    .roi-calc-btn:hover { background: var(--navy-dark, #091F40); transform: translateY(-1px); }
+    .roi-results { display: none; grid-template-columns: 1fr; gap: 1.25rem; animation: panelFadeIn 400ms ease both; }
+    .roi-results.visible { display: grid; }
+    @media (min-width: 640px) { .roi-results { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 900px) { .roi-results { grid-template-columns: 1fr 1fr 1fr; } }
+    .roi-card { background: var(--cream); border-radius: 8px; padding: 1.75rem; border-top: 3px solid rgba(12,45,92,0.15); }
+    .roi-card.highlight { border-top-color: var(--gold); background: rgba(30,95,173,0.04); }
+    .roi-card-label { font-family: var(--font-body); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray-brand, #787878); margin-bottom: 0.5rem; }
+    .roi-card-value { font-family: var(--font-display); font-weight: 700; font-size: 2rem; color: var(--navy); line-height: 1; margin-bottom: 0.5rem; }
+    .roi-card.highlight .roi-card-value { color: var(--gold); }
+    .roi-card-desc { font-family: var(--font-body); font-size: 0.8125rem; color: var(--muted); line-height: 1.6; }
+    .roi-disclaimer { font-family: var(--font-body); font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 1.25rem; line-height: 1.5; }
+    .roi-cta { text-align: center; margin-top: 2.5rem; }
+
   </style>
 </head>
 
 <body>
+
+  <div id="scroll-progress" aria-hidden="true"></div>
 
   <!-- =========================================
        NAVIGATION
   ========================================= -->
   <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="#" class="nav-wordmark" aria-label="Barnett Advisory home">Barnett Advisory</a>
 
-      <div class="nav-links" role="list">
-        <a href="#services" role="listitem">Services</a>
-        <a href="#about" role="listitem">About</a>
-        <a href="#faq" role="listitem">FAQ</a>
-        <a href="#" class="btn btn-gold nav-cta open-cal-modal" role="listitem">Book a Call</a>
+      <a href="#" class="nav-wordmark" aria-label="Barnett Advisory home">
+        <img src="https://images.barnett-advisory.com/Hosted/Logo_Color_HZ.png" alt="Barnett Advisory" class="nav-logo-img">
+      </a>
+
+      <div class="nav-links">
+
+        <!-- SERVICES — mega menu -->
+        <div class="nav-item has-mega" id="nav-item-services">
+          <button class="nav-trigger" aria-expanded="false" aria-controls="mega-services" id="nav-btn-services">
+            Services
+            <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </button>
+
+          <div class="mega-panel" id="mega-services" role="region" aria-labelledby="nav-btn-services">
+            <div class="mega-grid">
+
+              <!-- Col 1: What We Do -->
+              <div class="mega-col">
+                <p class="mega-col-label">What We Do</p>
+                <a href="#services" class="mega-link">
+                  <span class="mega-link-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">Managed HR Operations</span>
+                    <span class="mega-link-desc">Payroll, benefits, compliance &amp; employee relations</span>
+                  </span>
+                </a>
+                <a href="#services" class="mega-link">
+                  <span class="mega-link-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 20h20M6 20V10l6-6 6 6v10"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">Strategic Advisory</span>
+                    <span class="mega-link-desc">Org design, total rewards &amp; HR transformation</span>
+                  </span>
+                </a>
+                <a href="#hris" class="mega-link">
+                  <span class="mega-link-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">HRIS Implementation</span>
+                    <span class="mega-link-desc">Paylocity, Workday, UKG, ADP &amp; more</span>
+                  </span>
+                </a>
+                <a href="#services" class="mega-link">
+                  <span class="mega-link-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">Fractional HR Leadership</span>
+                    <span class="mega-link-desc">Senior HR embedded, without the full-time cost</span>
+                  </span>
+                </a>
+                <a href="#explorer" class="mega-link mega-link-cta">
+                  <span class="mega-link-icon mega-link-icon-accent" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">Service Explorer →</span>
+                    <span class="mega-link-desc">Filter by need, industry, or company stage</span>
+                  </span>
+                </a>
+              </div>
+
+              <!-- Col 2: Industries -->
+              <div class="mega-col">
+                <p class="mega-col-label">By Industry</p>
+                <a href="#industries" class="mega-link">
+                  <span class="mega-link-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">Behavioral Health</span>
+                    <span class="mega-link-desc">Credentialing, turnover &amp; investigation sensitivity</span>
+                  </span>
+                </a>
+                <a href="#industries" class="mega-link">
+                  <span class="mega-link-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">Homecare</span>
+                    <span class="mega-link-desc">Caregiver classification &amp; EVV compliance</span>
+                  </span>
+                </a>
+                <a href="#industries" class="mega-link">
+                  <span class="mega-link-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">Automotive</span>
+                    <span class="mega-link-desc">Variable pay, FLSA &amp; multi-location HR</span>
+                  </span>
+                </a>
+                <a href="#industries" class="mega-link">
+                  <span class="mega-link-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 20h20M4 20V8l8-6 8 6v12"/><path d="M9 20v-5h6v5"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">Manufacturing</span>
+                    <span class="mega-link-desc">OSHA documentation, shift compliance &amp; M&amp;A</span>
+                  </span>
+                </a>
+                <a href="#industries" class="mega-link">
+                  <span class="mega-link-icon" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                  </span>
+                  <span class="mega-link-body">
+                    <span class="mega-link-title">Professional Services</span>
+                    <span class="mega-link-desc">Pay transparency &amp; remote multi-state exposure</span>
+                  </span>
+                </a>
+              </div>
+
+              <!-- Col 3: Tools (featured, dark) -->
+              <div class="mega-col mega-col-featured">
+                <p class="mega-col-label">Tools &amp; Resources</p>
+                <a href="#health-check" class="mega-feat-card">
+                  <span class="mega-feat-card-title">HR Health Check</span>
+                  <span class="mega-feat-card-desc">7-question risk assessment. Instant results, no email required.</span>
+                  <span class="mega-feat-card-cta">Take the assessment →</span>
+                </a>
+                <a href="#roi-calculator" class="mega-feat-card">
+                  <span class="mega-feat-card-title">ROI Calculator</span>
+                  <span class="mega-feat-card-desc">See what HR neglect is actually costing your organization.</span>
+                  <span class="mega-feat-card-cta">Calculate your exposure →</span>
+                </a>
+                <a href="#timeline" class="mega-feat-card">
+                  <span class="mega-feat-card-title">How We Work</span>
+                  <span class="mega-feat-card-desc">Five steps from first call to embedded HR partner.</span>
+                  <span class="mega-feat-card-cta">See the process →</span>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ABOUT — simple dropdown -->
+        <div class="nav-item has-dropdown" id="nav-item-about">
+          <button class="nav-trigger" aria-expanded="false" aria-controls="dropdown-about" id="nav-btn-about">
+            About
+            <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2 4 6 8 10 4"/></svg>
+          </button>
+          <div class="dropdown-panel" id="dropdown-about" role="region" aria-labelledby="nav-btn-about">
+            <a href="#about" class="dropdown-link">About Kody Barnett</a>
+            <a href="#case-study" class="dropdown-link">Client Results</a>
+            <a href="#testimonials" class="dropdown-link">Testimonials</a>
+            <a href="#timeline" class="dropdown-link">Our Process</a>
+            <a href="#trusted-by" class="dropdown-link">Trusted By</a>
+          </div>
+        </div>
+
+        <!-- FAQ — direct -->
+        <a href="#faq" class="nav-direct-link">FAQ</a>
+
+        <!-- CTA -->
+        <a href="#" class="btn btn-navy nav-cta open-cal-modal">Book a Call</a>
+
       </div>
 
-      <button class="nav-hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span></span>
-        <span></span>
-        <span></span>
+      <button class="nav-hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Nav backdrop -->
+  <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
+
+  <!-- =========================================
+       MOBILE NAVIGATION OVERLAY
+  ========================================= -->
+  <div class="mobile-overlay" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation" aria-hidden="true">
+
+    <!-- Header bar -->
+    <div class="mobile-overlay-header">
+      <a href="#" class="mobile-overlay-logo-link" aria-label="Barnett Advisory home">
+        <img src="https://images.barnett-advisory.com/Hosted/Logo_Color_HZ.png" alt="Barnett Advisory" class="mobile-overlay-logo-img">
+      </a>
+      <button class="mobile-overlay-close" id="mobile-overlay-close" aria-label="Close navigation menu">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+          <line x1="3" y1="3" x2="15" y2="15"/><line x1="15" y1="3" x2="3" y2="15"/>
+        </svg>
       </button>
     </div>
 
-    <nav class="nav-mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#faq">FAQ</a>
-      <a href="#" class="btn btn-gold open-cal-modal">Book a Call</a>
-    </nav>
-  </nav>
+    <!-- Scrollable nav body -->
+    <div class="mobile-nav-body">
+
+      <!-- Services accordion -->
+      <div class="mobile-section">
+        <button class="mobile-section-trigger" aria-expanded="false">
+          Services
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="3 5 8 10 13 5"/></svg>
+        </button>
+        <div class="mobile-section-panel">
+          <div class="mobile-section-panel-inner">
+            <div class="mobile-section-group">
+              <p class="mobile-section-group-label">What We Do</p>
+              <a href="#services" class="mobile-section-link">Managed HR Operations</a>
+              <a href="#services" class="mobile-section-link">Strategic Advisory &amp; Transformation</a>
+              <a href="#hris" class="mobile-section-link">HRIS Implementation &amp; Optimization</a>
+              <a href="#services" class="mobile-section-link">Fractional HR Leadership</a>
+              <a href="#explorer" class="mobile-section-link mobile-section-link-cta">Service Explorer →</a>
+            </div>
+            <div class="mobile-section-group">
+              <p class="mobile-section-group-label">By Industry</p>
+              <a href="#industries" class="mobile-section-link">Behavioral Health</a>
+              <a href="#industries" class="mobile-section-link">Homecare</a>
+              <a href="#industries" class="mobile-section-link">Automotive Retail</a>
+              <a href="#industries" class="mobile-section-link">Manufacturing</a>
+              <a href="#industries" class="mobile-section-link">Professional Services</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mobile-row-divider"></div>
+
+      <!-- About accordion -->
+      <div class="mobile-section">
+        <button class="mobile-section-trigger" aria-expanded="false">
+          About
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="3 5 8 10 13 5"/></svg>
+        </button>
+        <div class="mobile-section-panel">
+          <div class="mobile-section-panel-inner">
+            <div class="mobile-section-group">
+              <a href="#about" class="mobile-section-link">About Kody Barnett</a>
+              <a href="#case-study" class="mobile-section-link">Client Results</a>
+              <a href="#testimonials" class="mobile-section-link">Testimonials</a>
+              <a href="#timeline" class="mobile-section-link">Our Process</a>
+              <a href="#trusted-by" class="mobile-section-link">Trusted By</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mobile-row-divider"></div>
+
+      <!-- Tools accordion -->
+      <div class="mobile-section">
+        <button class="mobile-section-trigger" aria-expanded="false">
+          Tools
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="3 5 8 10 13 5"/></svg>
+        </button>
+        <div class="mobile-section-panel">
+          <div class="mobile-section-panel-inner">
+            <div class="mobile-section-group">
+              <a href="#health-check" class="mobile-section-link">HR Health Check</a>
+              <a href="#roi-calculator" class="mobile-section-link">ROI Calculator</a>
+              <a href="#explorer" class="mobile-section-link">Service Explorer</a>
+              <a href="#hris" class="mobile-section-link">HRIS Resources</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mobile-row-divider"></div>
+
+      <!-- Direct links -->
+      <a href="#faq" class="mobile-direct-link">FAQ</a>
+      <a href="#contact" class="mobile-direct-link">Contact</a>
+
+      <div class="mobile-row-divider"></div>
+
+      <!-- CTA -->
+      <div class="mobile-cta-section">
+        <p class="mobile-cta-label">Ready to talk?</p>
+        <a href="#" class="btn btn-gold open-cal-modal" style="display:block;text-align:center;width:100%;padding:1rem;">Book a Free Discovery Call</a>
+        <p class="mobile-cta-sub">30 minutes. No pitch. No pressure.</p>
+      </div>
+
+    </div>
+  </div>
 
   <!-- =========================================
        HERO
   ========================================= -->
   <section id="hero" class="hero" aria-label="Hero">
+    <div class="hero-bg-mesh" aria-hidden="true"></div>
     <div class="container">
       <div class="hero-inner">
         <div class="hero-text">
           <h1>Most founders discover their HR problem the expensive way.</h1>
-          <p class="hero-subhead">Barnett Advisory embeds senior HR leadership into growing organizations without the overhead of a full-time hire. You get a direct line to Kody, always.</p>
+          <p class="hero-subhead">Barnett Advisory is a strategic HR consulting and outsourcing firm that helps ambitious organizations align people strategy with business performance. We provide executive-level advisory, HR transformation, and managed HR services that combine human insight with operational intelligence.</p>
           <p class="hero-trust">PHR Certified &middot; SHRM-CP &middot; Dayton, OH &middot; Serving clients nationwide</p>
           <div class="hero-cta-row">
             <a href="#" class="btn btn-gold open-cal-modal">Start with a Free Discovery Call</a>
@@ -1471,10 +2885,7 @@
         </div>
 
         <div class="hero-image">
-          <div class="headshot-placeholder" aria-hidden="true">
-            <span class="headshot-initials">KB</span>
-            <span class="headshot-name">Kody Barnett, PHR &middot; SHRM-CP</span>
-          </div>
+          <img src="Kody Barnett Image Headshot (1).jpg" alt="Kody Barnett, PHR, SHRM-CP" class="headshot-photo">
         </div>
       </div>
     </div>
@@ -1550,48 +2961,49 @@
 
       <div class="services-grid stagger-children">
 
-        <div class="service-card fade-in" aria-label="HR Technology and Systems service">
-          <p class="service-eyebrow">Tier 2</p>
-          <h3 class="service-title">HR Technology &amp; Systems</h3>
+        <div class="service-card fade-in" aria-label="Strategic Advisory and HR Transformation service">
+          <p class="service-eyebrow">Advisory</p>
+          <h3 class="service-title">Strategic Advisory &amp; HR Transformation</h3>
           <p class="service-price">Value-based project pricing</p>
           <ul class="service-features">
-            <li>HRIS evaluation and selection</li>
-            <li>Full implementation and configuration</li>
-            <li>Data migration and payroll transitions</li>
-            <li>Workflow automation</li>
-            <li>Team training and adoption support</li>
-            <li>Platforms: Paylocity, Workday, UKG, ADP</li>
+            <li>Organizational design and restructuring</li>
+            <li>Total rewards strategy</li>
+            <li>HR modernization &amp; AI-enabled transformation</li>
+            <li>Performance management frameworks</li>
+            <li>Leadership development programs</li>
+            <li>M&amp;A HR due diligence and integration</li>
           </ul>
+          <p class="service-note">HR as a competitive advantage.</p>
         </div>
 
-        <div class="service-card featured fade-in" aria-label="Fractional HR Leadership service — most popular">
-          <span class="service-badge">Most Popular</span>
-          <p class="service-eyebrow">Tier 1</p>
-          <h3 class="service-title">Fractional HR Leadership</h3>
+        <div class="service-card featured fade-in" aria-label="Managed HR Operations service — featured solution">
+          <span class="service-badge">Featured Solution</span>
+          <p class="service-eyebrow">Managed HR</p>
+          <h3 class="service-title">Managed HR Operations</h3>
           <p class="service-price">$1,900 – $6,000/month &middot; Retainer-based</p>
           <ul class="service-features">
-            <li>Embedded HR partner on your leadership team</li>
+            <li>Expert-led, scalable HR ops keeping you compliant</li>
+            <li>Payroll management and benefits administration</li>
             <li>Employee relations and workplace investigations</li>
+            <li>Onboarding, offboarding &amp; compliance monitoring</li>
             <li>Handbook, policy, and documentation</li>
-            <li>Onboarding and offboarding systems</li>
-            <li>Compliance monitoring and risk management</li>
             <li>Direct line to Kody — no handoffs, no junior staff</li>
-            <li>Scales with your organization</li>
+            <li>Scales up or down with your organization</li>
           </ul>
           <p class="service-note">Most clients start here.</p>
         </div>
 
-        <div class="service-card fade-in" aria-label="Project-Based Engagements service">
-          <p class="service-eyebrow">Tier 3</p>
-          <h3 class="service-title">Project-Based Engagements</h3>
+        <div class="service-card fade-in" aria-label="People Analytics and Technology service">
+          <p class="service-eyebrow">Technology</p>
+          <h3 class="service-title">People Analytics &amp; Technology</h3>
           <p class="service-price">$95–$150/hour or fixed project fee</p>
           <ul class="service-features">
-            <li>Compliance audits and remediation</li>
-            <li>M&amp;A HR due diligence</li>
-            <li>Performance management rollouts</li>
-            <li>Multi-state HR setup</li>
-            <li>Regulatory compliance (SECURE Act, etc.)</li>
-            <li>HR assessment and strategic roadmap</li>
+            <li>HRIS evaluation, implementation &amp; optimization</li>
+            <li>Workflow automation and process design</li>
+            <li>Data migration and payroll system transitions</li>
+            <li>People analytics and actionable insights</li>
+            <li>Team training and adoption support</li>
+            <li>Platforms: Paylocity, Paycom, Paycor, ADP, Workday, UKG</li>
           </ul>
         </div>
 
@@ -1691,19 +3103,19 @@
 
       <div class="case-stats-grid stagger-children" aria-label="Case study statistics">
         <div class="fade-in">
-          <p class="case-stat-number">9</p>
+          <p class="case-stat-number" data-count="9">9</p>
           <p class="case-stat-label">Locations onboarded in 2 weeks</p>
         </div>
         <div class="fade-in">
-          <p class="case-stat-number">0</p>
+          <p class="case-stat-number" data-count="0">0</p>
           <p class="case-stat-label">Payroll disruptions</p>
         </div>
         <div class="fade-in">
-          <p class="case-stat-number">3</p>
+          <p class="case-stat-number" data-count="3">3</p>
           <p class="case-stat-label">States, full compliance</p>
         </div>
         <div class="fade-in">
-          <p class="case-stat-number">70%</p>
+          <p class="case-stat-number" data-count="70" data-suffix="%">70%</p>
           <p class="case-stat-label">Reduction in CEO HR time</p>
         </div>
       </div>
@@ -1764,6 +3176,24 @@
   </section>
 
   <!-- =========================================
+       TRUSTED BY
+  ========================================= -->
+  <section id="trusted-by" class="trusted-by section-pad" aria-labelledby="trusted-by-heading">
+    <div class="container">
+      <span class="eyebrow" style="text-align:center;display:block;">Trusted By</span>
+      <h2 class="section-h2 centered fade-in" id="trusted-by-heading">Trusted HR expertise. Measurable impact.</h2>
+      <div class="trusted-logos fade-in" aria-label="Client organizations">
+        <span class="trusted-logo-name">Jiffy Lube</span>
+        <span class="trusted-logo-name">Chewy</span>
+        <span class="trusted-logo-name">United Way</span>
+        <span class="trusted-logo-name">Novolex</span>
+        <span class="trusted-logo-name">Biogas Engineering</span>
+        <span class="trusted-logo-name">Truly Pediatric</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
        COMPLIANCE GUARANTEE
   ========================================= -->
   <section id="compliance" class="compliance section-pad" aria-labelledby="compliance-heading">
@@ -1817,7 +3247,7 @@
         <div class="about-text">
           <span class="eyebrow">About</span>
           <h2 id="about-heading">Kody Barnett, PHR, SHRM-CP</h2>
-          <p class="about-bio">Eight years of HR leadership across manufacturing, automotive retail, behavioral healthcare, and defense contracting. Built HR functions from the ground up for organizations that had outgrown their people infrastructure — and ran them. Barnett Advisory is the direct result of a simple observation: growing companies need senior-level HR thinking, not a department.</p>
+          <p class="about-bio">Eight years of HR leadership across manufacturing, automotive retail, behavioral healthcare, and defense contracting. Built HR functions from the ground up for organizations that had outgrown their people infrastructure — and ran them. Barnett Advisory is a strategic HR consulting and outsourcing firm that helps ambitious organizations align people strategy with business performance. We provide executive-level advisory, HR transformation, and managed HR services that combine human insight with operational intelligence.</p>
 
           <div class="about-callout fade-in">
             <p>You always work with Kody directly. No handoffs. No junior staff. Every call, every deliverable, every decision goes through one person.</p>
@@ -1830,11 +3260,8 @@
           </div>
         </div>
 
-        <div class="about-image" aria-hidden="true">
-          <div class="headshot-placeholder">
-            <span class="headshot-initials">KB</span>
-            <span class="headshot-name">Kody Barnett, PHR &middot; SHRM-CP</span>
-          </div>
+        <div class="about-image">
+          <img src="Kody Barnett Image Headshot (1).jpg" alt="Kody Barnett, PHR, SHRM-CP" class="headshot-photo about-headshot-photo">
         </div>
 
       </div>
@@ -1962,6 +3389,48 @@
           </div>
         </div>
 
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-9" id="faq-btn-9">
+            What types of organizations does Barnett Advisory work with?
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="5 8 10 13 15 8"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-9" role="region" aria-labelledby="faq-btn-9">
+            <div class="faq-answer-inner">
+              We partner with small to mid-market businesses, nonprofits, and growth-stage companies seeking to professionalize their HR infrastructure or scale their people strategy. Our clients span industries including manufacturing, automotive retail, behavioral healthcare, defense contracting, SaaS, and more.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-10" id="faq-btn-10">
+            Can I outsource only part of my HR function?
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="5 8 10 13 15 8"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-10" role="region" aria-labelledby="faq-btn-10">
+            <div class="faq-answer-inner">
+              Yes. Our model is fully flexible — you can retain us for complete HR management or select specific functions such as employee relations, HRIS, payroll, benefits, or compliance. We design the engagement around your actual needs, not a pre-packaged service bundle.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" role="listitem">
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-11" id="faq-btn-11">
+            What HR technologies do you support?
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="5 8 10 13 15 8"></polyline>
+            </svg>
+          </button>
+          <div class="faq-answer" id="faq-answer-11" role="region" aria-labelledby="faq-btn-11">
+            <div class="faq-answer-inner">
+              We have deep experience with Paylocity, Paycom, Paycor, ADP, Workday, UKG, and other major HRIS platforms — helping clients implement, optimize, and manage systems for maximum ROI. If you're evaluating a new platform or optimizing an existing one, we can guide the full process from selection through adoption.
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -2019,35 +3488,709 @@
   </section>
 
   <!-- =========================================
+       SERVICE EXPLORER
+  ========================================= -->
+  <section id="explorer" class="explorer section-pad" aria-labelledby="explorer-heading">
+    <div class="container">
+      <span class="eyebrow" style="text-align:center;display:block;">Find Your Fit</span>
+      <h2 class="section-h2 centered fade-in" id="explorer-heading">What does your organization need?</h2>
+      <p class="explorer-intro fade-in">Filter by what matters most to you. Every card below maps to real engagements.</p>
+
+      <div class="explorer-filters fade-in">
+        <div class="filter-group">
+          <p class="filter-group-label">By Need</p>
+          <div class="filter-pills" data-filter-group="need">
+            <button class="filter-pill active" data-filter="all">All</button>
+            <button class="filter-pill" data-filter="compliance">Compliance</button>
+            <button class="filter-pill" data-filter="systems">Systems</button>
+            <button class="filter-pill" data-filter="people-strategy">People Strategy</button>
+            <button class="filter-pill" data-filter="investigations">Investigations</button>
+            <button class="filter-pill" data-filter="onboarding">Onboarding</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <p class="filter-group-label">By Industry</p>
+          <div class="filter-pills" data-filter-group="industry">
+            <button class="filter-pill active" data-filter="all">All</button>
+            <button class="filter-pill" data-filter="behavioral-health">Behavioral Health</button>
+            <button class="filter-pill" data-filter="homecare">Homecare</button>
+            <button class="filter-pill" data-filter="automotive">Automotive</button>
+            <button class="filter-pill" data-filter="manufacturing">Manufacturing</button>
+            <button class="filter-pill" data-filter="professional-services">Professional Services</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <p class="filter-group-label">By Company Stage</p>
+          <div class="filter-pills" data-filter-group="stage">
+            <button class="filter-pill active" data-filter="all">All</button>
+            <button class="filter-pill" data-filter="under-50">Under 50 Employees</button>
+            <button class="filter-pill" data-filter="scaling">Scaling 50–200</button>
+            <button class="filter-pill" data-filter="post-acquisition">Post-Acquisition</button>
+            <button class="filter-pill" data-filter="multi-state">Multi-State</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="explorer-grid" id="explorer-grid">
+        <div class="explorer-card fade-in" data-need="compliance onboarding" data-industry="behavioral-health homecare manufacturing" data-stage="under-50 scaling post-acquisition multi-state">
+          <p class="explorer-card-tag">Compliance</p>
+          <h3 class="explorer-card-title">HR Compliance Audit &amp; Remediation</h3>
+          <p class="explorer-card-desc">A systematic review of your current HR state — policies, documentation, and risk exposure. We identify gaps before they become liabilities and deliver a written remediation plan with clear owners and timelines.</p>
+          <ul class="explorer-card-deliverables">
+            <li>Full policy and documentation review</li>
+            <li>Written risk register with priority tiers</li>
+            <li>Remediation plan with timelines</li>
+          </ul>
+          <a href="#" class="explorer-cta-link open-cal-modal">Start with a call</a>
+        </div>
+
+        <div class="explorer-card fade-in" data-need="systems" data-industry="behavioral-health homecare automotive manufacturing professional-services" data-stage="scaling post-acquisition multi-state">
+          <p class="explorer-card-tag">Systems</p>
+          <h3 class="explorer-card-title">HRIS Implementation &amp; Optimization</h3>
+          <p class="explorer-card-desc">From vendor selection through go-live, we manage the full HRIS implementation lifecycle. We also optimize existing systems that aren't delivering the ROI they promised at purchase.</p>
+          <ul class="explorer-card-deliverables">
+            <li>Vendor evaluation matrix</li>
+            <li>Data migration and configuration</li>
+            <li>Payroll transition oversight</li>
+          </ul>
+          <a href="#" class="explorer-cta-link open-cal-modal">Start with a call</a>
+        </div>
+
+        <div class="explorer-card fade-in" data-need="people-strategy" data-industry="professional-services behavioral-health automotive" data-stage="under-50 scaling post-acquisition">
+          <p class="explorer-card-tag">People Strategy</p>
+          <h3 class="explorer-card-title">Organizational Design &amp; Total Rewards</h3>
+          <p class="explorer-card-desc">Build the people architecture that supports where your business is going, not just where it is today. We design compensation structures, job frameworks, and org design that scale with you.</p>
+          <ul class="explorer-card-deliverables">
+            <li>Compensation benchmarking</li>
+            <li>Job architecture and leveling</li>
+            <li>Total rewards strategy</li>
+          </ul>
+          <a href="#" class="explorer-cta-link open-cal-modal">Start with a call</a>
+        </div>
+
+        <div class="explorer-card fade-in" data-need="investigations" data-industry="behavioral-health homecare automotive manufacturing professional-services" data-stage="under-50 scaling post-acquisition multi-state">
+          <p class="explorer-card-tag">Investigations</p>
+          <h3 class="explorer-card-title">Workplace Investigation &amp; ER Support</h3>
+          <p class="explorer-card-desc">When an employee complaint, harassment allegation, or termination dispute surfaces, speed and documentation quality determine legal exposure. We run impartial investigations that protect your organization and your people.</p>
+          <ul class="explorer-card-deliverables">
+            <li>Complaint intake and documentation</li>
+            <li>Structured investigative process</li>
+            <li>Written findings and recommendations</li>
+          </ul>
+          <a href="#" class="explorer-cta-link open-cal-modal">Start with a call</a>
+        </div>
+
+        <div class="explorer-card fade-in" data-need="onboarding people-strategy" data-industry="homecare behavioral-health manufacturing automotive" data-stage="under-50 scaling post-acquisition">
+          <p class="explorer-card-tag">Onboarding</p>
+          <h3 class="explorer-card-title">Onboarding System Design</h3>
+          <p class="explorer-card-desc">First impressions shape retention. We build structured onboarding programs — from offer acceptance through 90 days — that accelerate time-to-productivity and reduce early attrition.</p>
+          <ul class="explorer-card-deliverables">
+            <li>Pre-boarding checklist and workflow</li>
+            <li>30/60/90 day framework</li>
+            <li>Manager onboarding guide</li>
+          </ul>
+          <a href="#" class="explorer-cta-link open-cal-modal">Start with a call</a>
+        </div>
+
+        <div class="explorer-card fade-in" data-need="compliance systems people-strategy" data-industry="automotive manufacturing" data-stage="post-acquisition multi-state">
+          <p class="explorer-card-tag">M&amp;A Integration</p>
+          <h3 class="explorer-card-title">Post-Acquisition HR Integration</h3>
+          <p class="explorer-card-desc">Acquisitions create HR complexity at speed — disparate systems, payroll transitions, policy harmonization, and cultural alignment all need to happen simultaneously. We've done it. We move fast and document everything.</p>
+          <ul class="explorer-card-deliverables">
+            <li>HR due diligence review</li>
+            <li>Integration roadmap and project plan</li>
+            <li>System and payroll consolidation</li>
+          </ul>
+          <a href="#" class="explorer-cta-link open-cal-modal">Start with a call</a>
+        </div>
+
+        <div class="explorer-card fade-in" data-need="people-strategy compliance" data-industry="professional-services behavioral-health homecare" data-stage="under-50 scaling">
+          <p class="explorer-card-tag">Fractional Leadership</p>
+          <h3 class="explorer-card-title">Fractional HR Director</h3>
+          <p class="explorer-card-desc">Embedded senior HR leadership on a retainer basis. You get a direct line to an experienced HR executive who operates as part of your leadership team — without the $120K salary, benefits, and PTO.</p>
+          <ul class="explorer-card-deliverables">
+            <li>Standing leadership team access</li>
+            <li>Policy and compliance ownership</li>
+            <li>Strategic HR roadmap</li>
+          </ul>
+          <a href="#" class="explorer-cta-link open-cal-modal">Start with a call</a>
+        </div>
+
+        <div class="explorer-card fade-in" data-need="compliance systems" data-industry="manufacturing homecare behavioral-health automotive" data-stage="multi-state post-acquisition scaling">
+          <p class="explorer-card-tag">Multi-State</p>
+          <h3 class="explorer-card-title">Multi-State HR Setup &amp; Compliance</h3>
+          <p class="explorer-card-desc">Operating across state lines means navigating different leave laws, wage requirements, and employment regulations simultaneously. We build the compliance framework and documentation infrastructure that keeps you protected in every state you operate.</p>
+          <ul class="explorer-card-deliverables">
+            <li>State-specific policy addenda</li>
+            <li>Leave law compliance matrix</li>
+            <li>Multi-state payroll coordination</li>
+          </ul>
+          <a href="#" class="explorer-cta-link open-cal-modal">Start with a call</a>
+        </div>
+
+        <div class="explorer-card fade-in" data-need="people-strategy onboarding" data-industry="professional-services behavioral-health automotive manufacturing" data-stage="scaling post-acquisition">
+          <p class="explorer-card-tag">Performance</p>
+          <h3 class="explorer-card-title">Performance Management System</h3>
+          <p class="explorer-card-desc">Drive accountability and growth through structured performance systems. We design programs that link individual contributions to organizational outcomes, using frameworks that are practical to run and defensible if challenged.</p>
+          <ul class="explorer-card-deliverables">
+            <li>Performance review cycle design</li>
+            <li>Rating calibration framework</li>
+            <li>Manager training and rollout</li>
+          </ul>
+          <a href="#" class="explorer-cta-link open-cal-modal">Start with a call</a>
+        </div>
+      </div>
+      <div class="explorer-empty" id="explorer-empty">No services match your current filters. Try broadening your selection or <button class="explorer-reset-link" style="background:none;border:none;color:var(--navy);font-weight:600;cursor:pointer;font-family:inherit;font-size:inherit;">reset all filters</button>.</div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       HRIS & TECH STACK
+  ========================================= -->
+  <section id="hris" class="hris section-pad" aria-labelledby="hris-heading">
+    <div class="container">
+      <span class="eyebrow" style="text-align:center;display:block;">Technology</span>
+      <h2 class="section-h2 centered fade-in" id="hris-heading">HRIS Implementation &amp; Optimization</h2>
+      <p class="hris-subhead fade-in">The right system, configured correctly, running reliably. Barnett Advisory manages the full implementation lifecycle — and fixes the ones that weren't done right the first time.</p>
+
+      <p class="hris-platforms-label fade-in">Platform Experience</p>
+      <div class="hris-platforms fade-in">
+        <div class="platform-badge">Paylocity</div>
+        <div class="platform-badge">Workday</div>
+        <div class="platform-badge">UKG</div>
+        <div class="platform-badge">ADP</div>
+        <div class="platform-badge">BambooHR</div>
+        <div class="platform-badge">Paycom</div>
+        <div class="platform-badge">Paycor</div>
+      </div>
+
+      <p class="hris-process-label fade-in">Implementation Process</p>
+      <div class="hris-process fade-in">
+        <div class="hris-step">
+          <div class="hris-step-number">1</div>
+          <p class="hris-step-title">Needs Assessment</p>
+          <p class="hris-step-desc">Audit current state, define requirements, identify integration needs</p>
+        </div>
+        <div class="hris-step">
+          <div class="hris-step-number">2</div>
+          <p class="hris-step-title">Vendor Evaluation</p>
+          <p class="hris-step-desc">Weighted scoring matrix, demos, and contract negotiation support</p>
+        </div>
+        <div class="hris-step">
+          <div class="hris-step-number">3</div>
+          <p class="hris-step-title">Data Migration</p>
+          <p class="hris-step-desc">Clean, map, and validate employee data before any go-live</p>
+        </div>
+        <div class="hris-step">
+          <div class="hris-step-number">4</div>
+          <p class="hris-step-title">Configuration</p>
+          <p class="hris-step-desc">System setup aligned to your workflows, approval chains, and roles</p>
+        </div>
+        <div class="hris-step">
+          <div class="hris-step-number">5</div>
+          <p class="hris-step-title">Payroll Transition</p>
+          <p class="hris-step-desc">Parallel-run oversight, tax setup, and zero-disruption cutover</p>
+        </div>
+        <div class="hris-step">
+          <div class="hris-step-number">6</div>
+          <p class="hris-step-title">Training</p>
+          <p class="hris-step-desc">Admin, manager, and employee training tailored to each role</p>
+        </div>
+        <div class="hris-step">
+          <div class="hris-step-number">7</div>
+          <p class="hris-step-title">Post-Launch</p>
+          <p class="hris-step-desc">Optimization reviews, reporting builds, and ongoing support</p>
+        </div>
+      </div>
+
+      <div class="hris-failure-block fade-in">
+        <p class="hris-failure-title">Why HRIS implementations fail</p>
+        <ul class="hris-failure-list">
+          <li>No dedicated project owner — the implementation gets handed to an HR coordinator who is already at capacity</li>
+          <li>Data migration is rushed — dirty data migrated at speed creates downstream payroll and reporting errors for years</li>
+          <li>Configuration mirrors the demo, not the actual business — workflows and approval structures are never customized</li>
+          <li>Training is a one-time event — without reinforcement and documentation, adoption collapses within 60 days</li>
+        </ul>
+      </div>
+
+      <div class="hris-fix-cta fade-in">
+        <div class="hris-fix-text">
+          <h3>Already have a system that isn't working?</h3>
+          <p>Mis-configured HRIS platforms are more common than failed implementations. We audit, optimize, and fix what's already in place — no rip-and-replace required.</p>
+        </div>
+        <a href="#" class="btn btn-navy open-cal-modal" style="flex-shrink:0;">Let's fix it</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       INDUSTRY SPECIALIZATION
+  ========================================= -->
+  <section id="industries" class="industries section-pad" aria-labelledby="industries-heading">
+    <div class="container">
+      <span class="eyebrow" style="text-align:center;display:block;">Industry Expertise</span>
+      <h2 class="section-h2 centered fade-in" id="industries-heading">We know your industry's HR problems.</h2>
+      <p style="text-align:center;color:var(--muted);margin-top:0.75rem;" class="fade-in">Every sector has HR challenges that are specific to its workforce, regulatory environment, and operational model.</p>
+
+      <div class="industry-tabs fade-in" role="tablist" aria-label="Industry tabs">
+        <button class="industry-tab active" role="tab" aria-selected="true" aria-controls="panel-bh" id="tab-bh">Behavioral Health</button>
+        <button class="industry-tab" role="tab" aria-selected="false" aria-controls="panel-hc" id="tab-hc">Homecare</button>
+        <button class="industry-tab" role="tab" aria-selected="false" aria-controls="panel-auto" id="tab-auto">Automotive</button>
+        <button class="industry-tab" role="tab" aria-selected="false" aria-controls="panel-mfg" id="tab-mfg">Manufacturing</button>
+        <button class="industry-tab" role="tab" aria-selected="false" aria-controls="panel-ps" id="tab-ps">Professional Services</button>
+      </div>
+
+      <div class="industry-panels fade-in">
+        <div class="industry-panel active" id="panel-bh" role="tabpanel" aria-labelledby="tab-bh">
+          <div class="industry-challenge-card">
+            <p class="challenge-number">01</p>
+            <p class="challenge-title">High Caregiver Turnover</p>
+            <p class="challenge-problem">Behavioral health organizations often see annual turnover rates above 40%, driven by emotional burnout, inconsistent scheduling, and weak onboarding.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Build structured onboarding, 90-day check-in protocols, and retention-focused total rewards strategies that address root causes rather than symptoms.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">02</p>
+            <p class="challenge-title">Credentialing &amp; Licensing Compliance</p>
+            <p class="challenge-problem">Tracking staff credentials, certifications, and license renewals across a distributed workforce creates audit risk when managed manually.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Implement automated credential tracking within your HRIS, with expiry alerts and documentation audit protocols built in.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">03</p>
+            <p class="challenge-title">Multi-Site Consistency</p>
+            <p class="challenge-problem">Organizations with multiple group homes or clinic locations often develop site-specific HR practices that diverge from policy and create legal inconsistency.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Standardize HR policies with site-level operational guides that give local managers clarity while maintaining organizational compliance.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">04</p>
+            <p class="challenge-title">Investigation Sensitivity</p>
+            <p class="challenge-problem">Workplace incidents in behavioral health carry heightened regulatory scrutiny. Poorly handled investigations can trigger licensing reviews and DHHS involvement.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Impartial, documented workplace investigations with regulatory reporting guidance included when required.</p>
+          </div>
+        </div>
+
+        <div class="industry-panel" id="panel-hc" role="tabpanel" aria-labelledby="tab-hc">
+          <div class="industry-challenge-card">
+            <p class="challenge-number">01</p>
+            <p class="challenge-title">Caregiver Classification Risk</p>
+            <p class="challenge-problem">Misclassifying home health aides as independent contractors is one of the most expensive compliance errors in homecare — wage claims and back taxes compound quickly.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Worker classification audit with state-specific analysis, corrective action plan, and documentation that demonstrates good-faith compliance.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">02</p>
+            <p class="challenge-title">EVV and Scheduling Compliance</p>
+            <p class="challenge-problem">Electronic Visit Verification requirements, Medicaid billing compliance, and scheduling complexity create layered HR and payroll exposure.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Align HRIS configuration with EVV workflows, build payroll audit controls, and document SOPs for billing-related HR functions.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">03</p>
+            <p class="challenge-title">Rapid Workforce Scaling</p>
+            <p class="challenge-problem">Homecare agencies often grow headcount faster than their HR infrastructure can support — leading to I-9 issues, missed onboarding steps, and benefit enrollment failures.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Scalable onboarding systems with digital I-9 management, automated document collection, and manager checklists that work at volume.</p>
+          </div>
+        </div>
+
+        <div class="industry-panel" id="panel-auto" role="tabpanel" aria-labelledby="tab-auto">
+          <div class="industry-challenge-card">
+            <p class="challenge-number">01</p>
+            <p class="challenge-title">Variable Compensation Complexity</p>
+            <p class="challenge-problem">Commission structures, flat-rate pay, and spiff programs in automotive retail create FLSA exposure when overtime calculations don't account for all forms of compensation.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Compensation structure review, FLSA compliance analysis, and written pay plans that are defensible and easy to administer.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">02</p>
+            <p class="challenge-title">High-Volume Hiring and Turnover</p>
+            <p class="challenge-problem">Automotive dealerships and service groups often run lean, with high turnover in sales and service roles that creates continuous onboarding and documentation burden.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Streamlined hiring workflows, templated onboarding systems, and HRIS automation that reduces the manual burden of high-volume hiring.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">03</p>
+            <p class="challenge-title">Multi-Location Consistency</p>
+            <p class="challenge-problem">Franchise and multi-rooftop operators often have site-specific HR practices that diverge from company policy — increasing legal exposure and reducing operational predictability.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> HR policy harmonization across locations, with location-level operational guides and manager training that drives consistent execution.</p>
+          </div>
+        </div>
+
+        <div class="industry-panel" id="panel-mfg" role="tabpanel" aria-labelledby="tab-mfg">
+          <div class="industry-challenge-card">
+            <p class="challenge-number">01</p>
+            <p class="challenge-title">OSHA and Safety Documentation</p>
+            <p class="challenge-problem">Manufacturing environments require meticulous safety documentation, incident reporting, and return-to-work program management. Gaps create regulatory exposure and workers' comp risk.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> HR-side safety documentation audit, incident investigation protocols, and return-to-work program design aligned with OSHA recordkeeping requirements.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">02</p>
+            <p class="challenge-title">Shift-Work Compliance</p>
+            <p class="challenge-problem">Shift differentials, break compliance, and overtime management in manufacturing environments carry compounding FLSA risk when not properly documented and administered.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Timekeeping audit, FLSA compliance review, and payroll configuration that correctly calculates all forms of compensation for hourly manufacturing employees.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">03</p>
+            <p class="challenge-title">Workforce Scaling and M&amp;A</p>
+            <p class="challenge-problem">Manufacturing companies that grow through acquisition or rapid production ramp-ups often inherit legacy HR infrastructure that isn't scalable or compliant.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Post-acquisition HR integration with a focus on system consolidation, policy harmonization, and compliance remediation at speed.</p>
+          </div>
+        </div>
+
+        <div class="industry-panel" id="panel-ps" role="tabpanel" aria-labelledby="tab-ps">
+          <div class="industry-challenge-card">
+            <p class="challenge-number">01</p>
+            <p class="challenge-title">Exempt Classification and Overtime</p>
+            <p class="challenge-problem">Professional services firms frequently misclassify employees as exempt, particularly in consulting, staffing, and advisory roles — creating significant FLSA back-pay exposure.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Exemption analysis by role using the duties test, written classification documentation, and corrective action planning where reclassification is needed.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">02</p>
+            <p class="challenge-title">Equity and Compensation Transparency</p>
+            <p class="challenge-problem">As pay transparency laws expand, professional services firms face increasing pressure to document compensation rationale — and risk significant disruption if they haven't built that infrastructure.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Job architecture design, salary band development, and pay equity analysis that prepares you for transparency requirements before they become mandatory.</p>
+          </div>
+          <div class="industry-challenge-card">
+            <p class="challenge-number">03</p>
+            <p class="challenge-title">Remote Work Multi-State Exposure</p>
+            <p class="challenge-problem">Professional services firms with distributed teams often unknowingly create nexus in multiple states — triggering payroll tax, leave law, and benefits administration obligations they aren't managing.</p>
+            <p class="challenge-solution"><strong>Our approach:</strong> Multi-state exposure assessment, state registration guidance, and HR policy addenda that address jurisdiction-specific requirements for every state where you have employees.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       ENGAGEMENT TIMELINE
+  ========================================= -->
+  <section id="timeline" class="timeline section-pad" aria-labelledby="timeline-heading">
+    <div class="container">
+      <span class="eyebrow">What Happens Next</span>
+      <h2 class="section-h2 fade-in" id="timeline-heading">From first call to embedded partner.</h2>
+      <p class="timeline-subhead fade-in">Five steps from inquiry to an HR function that works. Most clients are operational within two weeks.</p>
+
+      <div class="timeline-track stagger-children">
+        <div class="timeline-step fade-in">
+          <div class="timeline-node">1</div>
+          <div class="timeline-step-content">
+            <p class="timeline-step-title">Discovery Call</p>
+            <p class="timeline-step-desc">30 minutes. No pitch deck. We learn about your organization, your current HR state, and what's driving the urgency.</p>
+          </div>
+        </div>
+        <div class="timeline-step fade-in">
+          <div class="timeline-node">2</div>
+          <div class="timeline-step-content">
+            <p class="timeline-step-title">HR Assessment</p>
+            <p class="timeline-step-desc">A rapid diagnostic of your current HR infrastructure — policies, systems, compliance posture, and organizational risk.</p>
+          </div>
+        </div>
+        <div class="timeline-step fade-in">
+          <div class="timeline-node">3</div>
+          <div class="timeline-step-content">
+            <p class="timeline-step-title">Proposal</p>
+            <p class="timeline-step-desc">A clear, written proposal outlining scope, pricing, and timeline. No ambiguity. You know exactly what you're getting and what it costs.</p>
+          </div>
+        </div>
+        <div class="timeline-step fade-in">
+          <div class="timeline-node">4</div>
+          <div class="timeline-step-content">
+            <p class="timeline-step-title">Kickoff</p>
+            <p class="timeline-step-desc">Introductions to your team, system access, priority triage, and a 30-day action plan built in the first week.</p>
+          </div>
+        </div>
+        <div class="timeline-step fade-in">
+          <div class="timeline-node">5</div>
+          <div class="timeline-step-content">
+            <p class="timeline-step-title">Embedded Work</p>
+            <p class="timeline-step-desc">Ongoing embedded partnership. Direct access, real deliverables, and measurable progress every month.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-cta fade-in">
+        <a href="#" class="btn btn-gold open-cal-modal">Start Step 1 — Book a Discovery Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       HR HEALTH CHECK
+  ========================================= -->
+  <section id="health-check" class="health-check section-pad" aria-labelledby="hc-heading">
+    <div class="container">
+      <span class="eyebrow" style="text-align:center;display:block;">Self-Assessment</span>
+      <h2 class="section-h2 centered fade-in" id="hc-heading">HR Health Check</h2>
+      <p class="health-check-intro fade-in">Seven questions. Two minutes. Understand your HR risk profile before we talk.</p>
+
+      <div class="health-check-widget fade-in">
+        <div class="hc-progress-bar-wrap" aria-hidden="true">
+          <div class="hc-progress-bar" id="hc-progress" style="width:0%"></div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="hc-step active" data-step="1">
+          <p class="hc-step-label">Question 1 of 7</p>
+          <p class="hc-question">Does your organization have a current employee handbook?</p>
+          <p class="hc-question-sub">Reviewed or updated within the last 12–18 months to reflect current law.</p>
+          <div class="hc-options">
+            <button class="hc-option" data-value="0"><span class="hc-option-dot"></span>Yes — reviewed within the last 18 months</button>
+            <button class="hc-option" data-value="1"><span class="hc-option-dot"></span>Yes — but it hasn't been updated in over 2 years</button>
+            <button class="hc-option" data-value="2"><span class="hc-option-dot"></span>No — we don't have one or it's incomplete</button>
+          </div>
+          <div class="hc-nav"><span class="hc-step-counter">1 / 7</span><button class="hc-btn-next" data-next="2" disabled>Next →</button></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="hc-step" data-step="2">
+          <p class="hc-step-label">Question 2 of 7</p>
+          <p class="hc-question">Are your I-9 forms current and properly completed for all employees?</p>
+          <p class="hc-question-sub">I-9 audit failures are among the most common and costly compliance violations for growing companies.</p>
+          <div class="hc-options">
+            <button class="hc-option" data-value="0"><span class="hc-option-dot"></span>Yes — we've audited our I-9s within the last year</button>
+            <button class="hc-option" data-value="1"><span class="hc-option-dot"></span>We have I-9s but haven't formally audited them</button>
+            <button class="hc-option" data-value="2"><span class="hc-option-dot"></span>We're not confident our I-9s are complete or correct</button>
+          </div>
+          <div class="hc-nav"><span class="hc-step-counter">2 / 7</span><button class="hc-btn-next" data-next="3" disabled>Next →</button></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="hc-step" data-step="3">
+          <p class="hc-step-label">Question 3 of 7</p>
+          <p class="hc-question">Do you have documented termination procedures followed consistently?</p>
+          <p class="hc-question-sub">Inconsistent or undocumented termination processes are the leading cause of wrongful termination claims.</p>
+          <div class="hc-options">
+            <button class="hc-option" data-value="0"><span class="hc-option-dot"></span>Yes — written procedures followed every time</button>
+            <button class="hc-option" data-value="1"><span class="hc-option-dot"></span>Informal — we handle it case by case</button>
+            <button class="hc-option" data-value="2"><span class="hc-option-dot"></span>No documented process</button>
+          </div>
+          <div class="hc-nav"><span class="hc-step-counter">3 / 7</span><button class="hc-btn-next" data-next="4" disabled>Next →</button></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="hc-step" data-step="4">
+          <p class="hc-step-label">Question 4 of 7</p>
+          <p class="hc-question">Do you have employees in more than one state?</p>
+          <p class="hc-question-sub">Each state has its own leave laws, wage requirements, and employment regulations — and most cross-state employers aren't fully compliant.</p>
+          <div class="hc-options">
+            <button class="hc-option" data-value="0"><span class="hc-option-dot"></span>No — single state only</button>
+            <button class="hc-option" data-value="1"><span class="hc-option-dot"></span>Yes — and we have state-specific policies in place</button>
+            <button class="hc-option" data-value="2"><span class="hc-option-dot"></span>Yes — and we're not sure if we're fully compliant</button>
+          </div>
+          <div class="hc-nav"><span class="hc-step-counter">4 / 7</span><button class="hc-btn-next" data-next="5" disabled>Next →</button></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="hc-step" data-step="5">
+          <p class="hc-step-label">Question 5 of 7</p>
+          <p class="hc-question">Are employee performance issues documented in writing before termination?</p>
+          <p class="hc-question-sub">Retroactive documentation after a termination dispute is rarely sufficient. Pre-termination documentation is the primary defense in wrongful termination claims.</p>
+          <div class="hc-options">
+            <button class="hc-option" data-value="0"><span class="hc-option-dot"></span>Yes — performance is always documented before action is taken</button>
+            <button class="hc-option" data-value="1"><span class="hc-option-dot"></span>Sometimes — depends on the manager</button>
+            <button class="hc-option" data-value="2"><span class="hc-option-dot"></span>No — we typically handle it verbally</button>
+          </div>
+          <div class="hc-nav"><span class="hc-step-counter">5 / 7</span><button class="hc-btn-next" data-next="6" disabled>Next →</button></div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="hc-step" data-step="6">
+          <p class="hc-step-label">Question 6 of 7</p>
+          <p class="hc-question">Does your organization use an HRIS to manage employee data and payroll?</p>
+          <p class="hc-question-sub">Spreadsheet-based HR creates compounding data integrity and compliance risk as headcount grows.</p>
+          <div class="hc-options">
+            <button class="hc-option" data-value="0"><span class="hc-option-dot"></span>Yes — a dedicated HRIS platform, well-configured</button>
+            <button class="hc-option" data-value="1"><span class="hc-option-dot"></span>Yes — but it's not set up well or fully utilized</button>
+            <button class="hc-option" data-value="2"><span class="hc-option-dot"></span>No — spreadsheets or a basic payroll processor only</button>
+          </div>
+          <div class="hc-nav"><span class="hc-step-counter">6 / 7</span><button class="hc-btn-next" data-next="7" disabled>Next →</button></div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="hc-step" data-step="7">
+          <p class="hc-step-label">Question 7 of 7</p>
+          <p class="hc-question">Has your organization undergone a formal HR audit in the last two years?</p>
+          <p class="hc-question-sub">Organizations without a recent audit often discover significant compliance gaps only when a complaint or investigation surfaces.</p>
+          <div class="hc-options">
+            <button class="hc-option" data-value="0"><span class="hc-option-dot"></span>Yes — formal HR audit within the last 24 months</button>
+            <button class="hc-option" data-value="1"><span class="hc-option-dot"></span>Not formally — we do internal reviews occasionally</button>
+            <button class="hc-option" data-value="2"><span class="hc-option-dot"></span>No — we've never had a formal HR audit</button>
+          </div>
+          <div class="hc-nav"><span class="hc-step-counter">7 / 7</span><button class="hc-btn-next" id="hc-submit" data-next="result" disabled>See My Results →</button></div>
+        </div>
+
+        <!-- Result -->
+        <div class="hc-result" id="hc-result">
+          <p style="font-family:var(--font-body);font-size:0.8125rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:1rem;">Your HR Risk Profile</p>
+          <div class="hc-risk-badge" id="hc-risk-badge"></div>
+          <p class="hc-result-summary" id="hc-result-summary"></p>
+          <a href="#" class="btn btn-navy open-cal-modal">Book a Discovery Call</a>
+          <button class="hc-restart" id="hc-restart">Retake Assessment</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
+       ROI CALCULATOR
+  ========================================= -->
+  <section id="roi-calculator" class="roi-calc section-pad" aria-labelledby="roi-heading">
+    <div class="container">
+      <span class="eyebrow" style="text-align:center;display:block;">The Business Case</span>
+      <h2 class="section-h2 centered fade-in" id="roi-heading">What HR neglect actually costs you.</h2>
+      <p class="roi-calc-subhead fade-in">Enter your headcount and average salary to see the financial case for getting HR right.</p>
+
+      <div class="roi-widget fade-in">
+        <div class="roi-inputs">
+          <div class="roi-input-group">
+            <label for="roi-headcount">Number of Employees</label>
+            <input type="number" id="roi-headcount" min="1" max="500" placeholder="e.g. 35">
+            <p class="roi-input-sub">Current total headcount</p>
+          </div>
+          <div class="roi-input-group">
+            <label for="roi-salary">Average Annual Salary ($)</label>
+            <input type="number" id="roi-salary" min="20000" max="250000" placeholder="e.g. 55000">
+            <p class="roi-input-sub">Average across all roles</p>
+          </div>
+        </div>
+        <button class="roi-calc-btn" id="roi-calculate">Calculate My Exposure →</button>
+
+        <div class="roi-results" id="roi-results">
+          <div class="roi-card">
+            <p class="roi-card-label">Annual Turnover Cost</p>
+            <p class="roi-card-value" id="roi-turnover-val">—</p>
+            <p class="roi-card-desc">Estimated annual cost assuming 20% turnover rate at 75% of salary per replacement (recruiting, onboarding, lost productivity).</p>
+          </div>
+          <div class="roi-card">
+            <p class="roi-card-label">Compliance Risk Exposure</p>
+            <p class="roi-card-value" id="roi-compliance-val">—</p>
+            <p class="roi-card-desc">Estimated liability exposure based on headcount, assuming one undocumented termination dispute or regulatory finding per growth cycle.</p>
+          </div>
+          <div class="roi-card highlight">
+            <p class="roi-card-label">Savings vs. Full-Time HR Director</p>
+            <p class="roi-card-value" id="roi-savings-val">—</p>
+            <p class="roi-card-desc">Annual savings versus a fully-loaded HR Director ($110K salary + benefits) at average fractional pricing of $2,500/month.</p>
+          </div>
+        </div>
+        <p class="roi-disclaimer" id="roi-disclaimer" style="display:none;">Estimates are illustrative and based on industry benchmarks. Actual figures vary by industry, geography, and specific circumstances. Results are not a guarantee of savings or liability exposure.</p>
+
+        <div class="roi-cta" id="roi-cta" style="display:none;">
+          <a href="#" class="btn btn-navy open-cal-modal">Talk through the numbers with Kody</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================
        FOOTER
   ========================================= -->
   <footer class="footer" role="contentinfo">
     <div class="container">
-      <div class="footer-main">
+      <div class="footer-grid">
+
+        <!-- Brand Column -->
         <div class="footer-brand">
-          <span class="footer-wordmark">Barnett Advisory</span>
-          <span class="footer-tagline">Fractional HR Leadership</span>
+          <div class="footer-wordmark-wrap">
+            <span class="footer-wordmark">Barnett</span>
+            <span class="footer-wordmark-advisory">Advisory</span>
+          </div>
+          <p class="footer-tagline">Fractional HR leadership for growing organizations that have outgrown their people infrastructure.</p>
+          <div class="footer-creds-list">
+            <span class="footer-cred-badge">PHR Certified</span>
+            <span class="footer-cred-badge">SHRM-CP</span>
+            <span class="footer-cred-badge">Google AI Essentials</span>
+          </div>
+          <div class="footer-social">
+            <a href="https://www.linkedin.com/in/kody-barnett" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="mailto:kody@barnett-advisory.com" class="footer-social-link" aria-label="Email Kody">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </a>
+          </div>
         </div>
 
-        <nav class="footer-nav" aria-label="Footer navigation">
-          <a href="#services">Services</a>
-          <a href="#about">About</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contact">Contact</a>
-        </nav>
-
-        <div class="footer-creds">
-          <p class="footer-credentials">PHR Certified &middot; SHRM-CP &middot; Google AI Essentials</p>
+        <!-- Services Column -->
+        <div class="footer-col">
+          <p class="footer-col-heading">Services</p>
+          <ul class="footer-col-links">
+            <li><a href="#services">HR Strategy &amp; Compliance</a></li>
+            <li><a href="#services">Talent Acquisition</a></li>
+            <li><a href="#services">Employee Relations</a></li>
+            <li><a href="#hris">HRIS Implementation</a></li>
+            <li><a href="#explorer">Service Explorer</a></li>
+            <li><a href="#industries">Industries Served</a></li>
+          </ul>
         </div>
+
+        <!-- Company Column -->
+        <div class="footer-col">
+          <p class="footer-col-heading">Company</p>
+          <ul class="footer-col-links">
+            <li><a href="#about">About Kody</a></li>
+            <li><a href="#timeline">Engagement Process</a></li>
+            <li><a href="#case-study">Case Studies</a></li>
+            <li><a href="#testimonials">Client Testimonials</a></li>
+            <li><a href="#roi-calculator">ROI Calculator</a></li>
+            <li><a href="#health-check">HR Health Check</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+
+        <!-- CTA Column -->
+        <div class="footer-cta-col">
+          <p class="footer-col-heading">Get In Touch</p>
+          <button class="footer-cta-btn open-cal-modal" aria-label="Book a free discovery call">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Book a Free Discovery Call
+          </button>
+
+          <div class="footer-contact-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Dayton, Ohio &mdash; serving clients remotely nationwide</span>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            <a href="mailto:kody@barnett-advisory.com">kody@barnett-advisory.com</a>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Response within 1 business day</span>
+          </div>
+        </div>
+
       </div>
     </div>
 
     <div class="footer-bottom">
       <div class="container">
-        <p class="footer-copyright">&copy; 2025 Barnett Advisory. All rights reserved.</p>
+        <div class="footer-bottom-inner">
+          <p class="footer-copyright">&copy; 2026 Barnett Advisory LLC. All rights reserved.</p>
+          <nav class="footer-legal-links" aria-label="Legal">
+            <a href="#contact">Privacy Policy</a>
+            <a href="#contact">Terms of Service</a>
+          </nav>
+        </div>
       </div>
     </div>
   </footer>
+
+  <!-- =========================================
+       LOCATION POPUP
+  ========================================= -->
+  <div id="location-popup" class="location-popup" role="dialog" aria-modal="false" aria-labelledby="popup-headline" aria-live="polite">
+    <button class="popup-close" id="popup-close" aria-label="Dismiss">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <line x1="1" y1="1" x2="11" y2="11"/><line x1="11" y1="1" x2="1" y2="11"/>
+      </svg>
+    </button>
+    <div class="popup-eyebrow">
+      <span class="popup-pulse"></span>
+      <span id="popup-location-label">Now Available</span>
+    </div>
+    <p class="popup-headline" id="popup-headline">HR support for businesses in <span id="popup-location">your area</span>.</p>
+    <p class="popup-body" id="popup-body">Growing companies are strengthening their HR foundation with fractional leadership. No full-time hire required.</p>
+    <div class="popup-actions">
+      <button class="popup-cta open-cal-modal" aria-label="Book a discovery call">Book a Discovery Call</button>
+      <button class="popup-dismiss" id="popup-dismiss">Not now</button>
+    </div>
+  </div>
 
   <!-- =========================================
        BOOKING MODAL
@@ -2085,44 +4228,100 @@
     document.addEventListener('DOMContentLoaded', function () {
 
       // =========================================
-      // 1. STICKY NAV
+      // 1. SCROLL PROGRESS BAR
+      // =========================================
+      var progressBar = document.getElementById('scroll-progress');
+
+      function updateProgress() {
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+        progressBar.style.width = pct + '%';
+      }
+
+      // =========================================
+      // 2. STICKY NAV + SCROLL EVENTS
       // =========================================
       var nav = document.getElementById('main-nav');
 
       window.addEventListener('scroll', function () {
-        if (window.scrollY > 40) {
-          nav.classList.add('scrolled');
-        } else {
-          nav.classList.remove('scrolled');
-        }
+        updateProgress();
+        nav.classList.toggle('scrolled', window.scrollY > 40);
       }, { passive: true });
 
-
       // =========================================
-      // 2. MOBILE HAMBURGER
+      // 3. MOBILE OVERLAY (slide-in drawer)
       // =========================================
       var hamburger = document.getElementById('hamburger');
       var mobileMenu = document.getElementById('mobile-menu');
+      var mobileClose = document.getElementById('mobile-overlay-close');
 
-      hamburger.addEventListener('click', function () {
-        var isOpen = mobileMenu.classList.contains('open');
-        mobileMenu.classList.toggle('open');
-        hamburger.classList.toggle('active');
-        hamburger.setAttribute('aria-expanded', String(!isOpen));
+      function openMobileMenu() {
+        mobileMenu.classList.add('open');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+        hamburger.classList.add('active');
+        hamburger.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        hamburger.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        // Close all accordion sections too
+        document.querySelectorAll('.mobile-section.open').forEach(function(s) {
+          s.classList.remove('open');
+          var trigger = s.querySelector('.mobile-section-trigger');
+          var panel = s.querySelector('.mobile-section-panel');
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+          if (panel) panel.style.height = '0';
+        });
+      }
+
+      if (hamburger) hamburger.addEventListener('click', function () {
+        mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
       });
 
-      // Close menu when a link is clicked
-      mobileMenu.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', function () {
-          mobileMenu.classList.remove('open');
-          hamburger.classList.remove('active');
-          hamburger.setAttribute('aria-expanded', 'false');
+      if (mobileClose) mobileClose.addEventListener('click', closeMobileMenu);
+
+      // Close when any nav link clicked
+      if (mobileMenu) {
+        mobileMenu.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', closeMobileMenu);
+        });
+      }
+
+      // =========================================
+      // 3b. MOBILE ACCORDION SECTIONS
+      // =========================================
+      document.querySelectorAll('.mobile-section-trigger').forEach(function(trigger) {
+        trigger.addEventListener('click', function() {
+          var section = trigger.closest('.mobile-section');
+          var panel = section ? section.querySelector('.mobile-section-panel') : null;
+          if (!section || !panel) return;
+          var isOpen = section.classList.contains('open');
+
+          // Close all sections
+          document.querySelectorAll('.mobile-section').forEach(function(s) {
+            s.classList.remove('open');
+            var t = s.querySelector('.mobile-section-trigger');
+            var p = s.querySelector('.mobile-section-panel');
+            if (t) t.setAttribute('aria-expanded', 'false');
+            if (p) p.style.height = '0';
+          });
+
+          // Toggle this one open
+          if (!isOpen) {
+            section.classList.add('open');
+            trigger.setAttribute('aria-expanded', 'true');
+            panel.style.height = panel.scrollHeight + 'px';
+          }
         });
       });
 
-
       // =========================================
-      // 3. SMOOTH SCROLL WITH OFFSET
+      // 4. SMOOTH SCROLL WITH OFFSET
       // =========================================
       var navHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 72;
 
@@ -2138,9 +4337,82 @@
         });
       });
 
+      // =========================================
+      // 4b. MEGA MENU & DROPDOWN
+      // =========================================
+      var navItems = document.querySelectorAll('.nav-item');
+      var navBackdrop = document.getElementById('nav-backdrop');
+
+      function closeAllNavPanels() {
+        navItems.forEach(function(item) {
+          item.classList.remove('open');
+          var trigger = item.querySelector('.nav-trigger');
+          if (trigger) trigger.setAttribute('aria-expanded', 'false');
+        });
+        if (navBackdrop) navBackdrop.classList.remove('visible');
+      }
+
+      navItems.forEach(function(item) {
+        var trigger = item.querySelector('.nav-trigger');
+        if (!trigger) return;
+
+        trigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var isOpen = item.classList.contains('open');
+          closeAllNavPanels();
+          if (!isOpen) {
+            item.classList.add('open');
+            trigger.setAttribute('aria-expanded', 'true');
+            if (navBackdrop) navBackdrop.classList.add('visible');
+          }
+        });
+      });
+
+      // Close on backdrop click
+      if (navBackdrop) navBackdrop.addEventListener('click', closeAllNavPanels);
+
+      // Close on outside click
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-item') && !e.target.closest('.nav-backdrop')) {
+          closeAllNavPanels();
+        }
+      });
+
+      // Close when mega/dropdown links are clicked
+      document.querySelectorAll('.mega-link, .mega-feat-card, .dropdown-link').forEach(function(link) {
+        link.addEventListener('click', closeAllNavPanels);
+      });
 
       // =========================================
-      // 4. FAQ ACCORDION
+      // 5. ACTIVE NAV LINK (section tracking)
+      // =========================================
+      var navDirectLinks = document.querySelectorAll('.nav-direct-link[href^="#"]');
+      var trackedSections = [];
+
+      navDirectLinks.forEach(function (link) {
+        var id = link.getAttribute('href').slice(1);
+        var section = document.getElementById(id);
+        if (section) trackedSections.push({ link: link, section: section });
+      });
+
+      if (trackedSections.length > 0) {
+        var sectionObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var matched = trackedSections.find(function (s) { return s.section === entry.target; });
+              if (matched) {
+                navDirectLinks.forEach(function (l) { l.classList.remove('nav-active'); });
+                matched.link.classList.add('nav-active');
+              }
+            }
+          });
+        }, { threshold: 0, rootMargin: '-35% 0px -60% 0px' });
+
+        trackedSections.forEach(function (s) { sectionObserver.observe(s.section); });
+      }
+
+      // =========================================
+      // 6. FAQ ACCORDION
       // =========================================
       var faqButtons = document.querySelectorAll('.faq-question');
 
@@ -2150,17 +4422,14 @@
           var answer = document.getElementById(answerId);
           var isExpanded = btn.getAttribute('aria-expanded') === 'true';
 
-          // Close all other items
           faqButtons.forEach(function (otherBtn) {
             if (otherBtn !== btn) {
-              var otherAnswerId = otherBtn.getAttribute('aria-controls');
-              var otherAnswer = document.getElementById(otherAnswerId);
+              var otherAnswer = document.getElementById(otherBtn.getAttribute('aria-controls'));
               otherBtn.setAttribute('aria-expanded', 'false');
               otherAnswer.style.height = '0';
             }
           });
 
-          // Toggle current
           if (isExpanded) {
             btn.setAttribute('aria-expanded', 'false');
             answer.style.height = '0';
@@ -2171,39 +4440,62 @@
         });
       });
 
-
       // =========================================
-      // 5. INTERSECTION OBSERVER — FADE IN
+      // 7. INTERSECTION OBSERVER — FADE IN
       // =========================================
-      var observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -48px 0px'
-      };
-
-      var observer = new IntersectionObserver(function (entries) {
+      var fadeObserver = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
+            fadeObserver.unobserve(entry.target);
           }
         });
-      }, observerOptions);
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-      // Apply stagger delays to children of .stagger-children
       document.querySelectorAll('.stagger-children').forEach(function (container) {
-        var children = container.querySelectorAll('.fade-in');
-        children.forEach(function (child, index) {
-          child.style.transitionDelay = (index * 80) + 'ms';
+        container.querySelectorAll('.fade-in').forEach(function (child, i) {
+          child.style.transitionDelay = (i * 95) + 'ms';
         });
       });
 
       document.querySelectorAll('.fade-in').forEach(function (el) {
-        observer.observe(el);
+        fadeObserver.observe(el);
       });
 
+      // =========================================
+      // 8. NUMBER COUNTER ANIMATION
+      // =========================================
+      function animateCount(el, target, suffix, duration) {
+        var startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          var progress = Math.min((ts - startTime) / duration, 1);
+          var ease = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.floor(ease * target) + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+          else el.textContent = target + suffix;
+        }
+        requestAnimationFrame(step);
+      }
+
+      var countObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var el = entry.target;
+            var target = parseInt(el.getAttribute('data-count'), 10);
+            var suffix = el.getAttribute('data-suffix') || '';
+            animateCount(el, target, suffix, 1600);
+            countObserver.unobserve(el);
+          }
+        });
+      }, { threshold: 0.6 });
+
+      document.querySelectorAll('[data-count]').forEach(function (el) {
+        countObserver.observe(el);
+      });
 
       // =========================================
-      // 6. FORM VALIDATION
+      // 9. FORM VALIDATION
       // =========================================
       var form = document.getElementById('contact-form');
       var successMsg = document.getElementById('contact-success');
@@ -2213,44 +4505,19 @@
           e.preventDefault();
           var valid = true;
 
-          // Clear previous errors
-          form.querySelectorAll('.form-error').forEach(function (err) {
-            err.classList.remove('visible');
-          });
-          form.querySelectorAll('input, textarea').forEach(function (field) {
-            field.style.borderColor = '';
-          });
+          form.querySelectorAll('.form-error').forEach(function (err) { err.classList.remove('visible'); });
+          form.querySelectorAll('input, textarea').forEach(function (field) { field.style.borderColor = ''; });
 
-          // Validate fields
           var name = document.getElementById('contact-name');
           var company = document.getElementById('contact-company');
           var email = document.getElementById('contact-email');
           var message = document.getElementById('contact-message');
 
-          if (!name.value.trim()) {
-            document.getElementById('error-name').classList.add('visible');
-            name.style.borderColor = '#f87171';
-            valid = false;
-          }
-
-          if (!company.value.trim()) {
-            document.getElementById('error-company').classList.add('visible');
-            company.style.borderColor = '#f87171';
-            valid = false;
-          }
-
+          if (!name.value.trim()) { document.getElementById('error-name').classList.add('visible'); name.style.borderColor = '#f87171'; valid = false; }
+          if (!company.value.trim()) { document.getElementById('error-company').classList.add('visible'); company.style.borderColor = '#f87171'; valid = false; }
           var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-          if (!email.value.trim() || !emailRegex.test(email.value.trim())) {
-            document.getElementById('error-email').classList.add('visible');
-            email.style.borderColor = '#f87171';
-            valid = false;
-          }
-
-          if (!message.value.trim()) {
-            document.getElementById('error-message').classList.add('visible');
-            message.style.borderColor = '#f87171';
-            valid = false;
-          }
+          if (!email.value.trim() || !emailRegex.test(email.value.trim())) { document.getElementById('error-email').classList.add('visible'); email.style.borderColor = '#f87171'; valid = false; }
+          if (!message.value.trim()) { document.getElementById('error-message').classList.add('visible'); message.style.borderColor = '#f87171'; valid = false; }
 
           if (valid) {
             form.style.display = 'none';
@@ -2259,9 +4526,8 @@
         });
       }
 
-
       // =========================================
-      // 7. BOOKING MODAL
+      // 10. BOOKING MODAL
       // =========================================
       var calOverlay = document.getElementById('cal-modal-overlay');
       var calClose = document.getElementById('cal-modal-close');
@@ -2279,20 +4545,322 @@
       }
 
       calClose.addEventListener('click', closeCalModal);
-
-      calOverlay.addEventListener('click', function (e) {
-        if (e.target === calOverlay) closeCalModal();
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && calOverlay.classList.contains('open')) closeCalModal();
-      });
+      calOverlay.addEventListener('click', function (e) { if (e.target === calOverlay) closeCalModal(); });
 
       document.querySelectorAll('.open-cal-modal').forEach(function (btn) {
         btn.addEventListener('click', openCalModal);
       });
 
+      // =========================================
+      // 11. ESCAPE KEY — CLOSE MODALS & PANELS
+      // =========================================
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        closeAllNavPanels();
+        if (mobileMenu && mobileMenu.classList.contains('open')) closeMobileMenu();
+        if (calOverlay && calOverlay.classList.contains('open')) closeCalModal();
+      });
+
+      // =========================================
+      // SERVICE EXPLORER FILTER
+      // =========================================
+      (function() {
+        var activeFilters = { need: 'all', industry: 'all', stage: 'all' };
+
+        function applyFilters() {
+          var cards = document.querySelectorAll('.explorer-card');
+          var visible = 0;
+          cards.forEach(function(card) {
+            var needMatch = activeFilters.need === 'all' || (card.dataset.need || '').split(' ').indexOf(activeFilters.need) > -1;
+            var industryMatch = activeFilters.industry === 'all' || (card.dataset.industry || '').split(' ').indexOf(activeFilters.industry) > -1;
+            var stageMatch = activeFilters.stage === 'all' || (card.dataset.stage || '').split(' ').indexOf(activeFilters.stage) > -1;
+            if (needMatch && industryMatch && stageMatch) {
+              card.classList.remove('hidden');
+              visible++;
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+          var empty = document.getElementById('explorer-empty');
+          if (empty) empty.classList.toggle('visible', visible === 0);
+        }
+
+        document.querySelectorAll('.explorer-filters .filter-pill').forEach(function(pill) {
+          pill.addEventListener('click', function() {
+            var group = pill.closest('[data-filter-group]').dataset.filterGroup;
+            pill.closest('[data-filter-group]').querySelectorAll('.filter-pill').forEach(function(p) { p.classList.remove('active'); });
+            pill.classList.add('active');
+            activeFilters[group] = pill.dataset.filter;
+            applyFilters();
+          });
+        });
+
+        var resetBtn = document.querySelector('.explorer-reset-link');
+        if (resetBtn) {
+          resetBtn.addEventListener('click', function() {
+            activeFilters = { need: 'all', industry: 'all', stage: 'all' };
+            document.querySelectorAll('.explorer-filters .filter-pill').forEach(function(p) {
+              p.classList.toggle('active', p.dataset.filter === 'all');
+            });
+            applyFilters();
+          });
+        }
+      })();
+
+      // =========================================
+      // INDUSTRY TABS
+      // =========================================
+      (function() {
+        var tabs = document.querySelectorAll('.industry-tab');
+        tabs.forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            tabs.forEach(function(t) { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+            var panelId = tab.getAttribute('aria-controls');
+            document.querySelectorAll('.industry-panel').forEach(function(p) { p.classList.remove('active'); });
+            var panel = document.getElementById(panelId);
+            if (panel) panel.classList.add('active');
+          });
+        });
+      })();
+
+      // =========================================
+      // HR HEALTH CHECK
+      // =========================================
+      (function() {
+        var answers = {};
+        var currentStep = 1;
+        var totalSteps = 7;
+
+        function getScore() {
+          var total = 0;
+          for (var k in answers) { total += parseInt(answers[k], 10); }
+          return total;
+        }
+
+        function showStep(n) {
+          document.querySelectorAll('.hc-step').forEach(function(s) { s.classList.remove('active'); });
+          var step = document.querySelector('.hc-step[data-step="' + n + '"]');
+          if (step) { step.classList.add('active'); currentStep = n; }
+          var pct = ((n - 1) / totalSteps) * 100;
+          var bar = document.getElementById('hc-progress');
+          if (bar) bar.style.width = pct + '%';
+          if (step && answers[n] !== undefined) {
+            step.querySelectorAll('.hc-option').forEach(function(opt) {
+              opt.classList.toggle('selected', opt.dataset.value == answers[n]);
+            });
+            var btn = step.querySelector('.hc-btn-next');
+            if (btn) btn.disabled = false;
+          }
+        }
+
+        function showResult() {
+          document.querySelectorAll('.hc-step').forEach(function(s) { s.classList.remove('active'); });
+          var bar = document.getElementById('hc-progress');
+          if (bar) bar.style.width = '100%';
+          var score = getScore();
+          var badge = document.getElementById('hc-risk-badge');
+          var summary = document.getElementById('hc-result-summary');
+          var result = document.getElementById('hc-result');
+          if (!badge || !summary || !result) return;
+          badge.className = 'hc-risk-badge';
+          if (score <= 3) {
+            badge.classList.add('hc-risk-low');
+            badge.textContent = 'Low Risk';
+            summary.textContent = 'Your HR infrastructure appears to be in solid shape. You have documented processes, compliance practices, and systems in place. The next step is ensuring ongoing monitoring and strategic HR support as your organization continues to grow. A periodic HR audit can help maintain your posture.';
+          } else if (score <= 8) {
+            badge.classList.add('hc-risk-moderate');
+            badge.textContent = 'Moderate Risk';
+            summary.textContent = 'Your organization has some HR practices in place, but there are meaningful gaps that could create liability if left unaddressed. Specific areas — likely documentation, multi-state compliance, or system infrastructure — need attention before your next growth phase or hiring cycle.';
+          } else {
+            badge.classList.add('hc-risk-high');
+            badge.textContent = 'High Risk';
+            summary.textContent = 'Your assessment indicates significant HR exposure across multiple areas. The good news: these are all solvable problems. A targeted HR audit and remediation plan will identify your highest-priority issues and give you a clear path forward — before a complaint, audit, or termination dispute forces the issue.';
+          }
+          result.classList.add('visible');
+        }
+
+        document.querySelectorAll('.hc-step .hc-option').forEach(function(opt) {
+          opt.addEventListener('click', function() {
+            var step = opt.closest('.hc-step');
+            var stepNum = parseInt(step.dataset.step, 10);
+            step.querySelectorAll('.hc-option').forEach(function(o) { o.classList.remove('selected'); });
+            opt.classList.add('selected');
+            answers[stepNum] = opt.dataset.value;
+            var btn = step.querySelector('.hc-btn-next');
+            if (btn) btn.disabled = false;
+          });
+        });
+
+        document.querySelectorAll('.hc-btn-next').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            if (btn.disabled) return;
+            var next = btn.dataset.next;
+            if (next === 'result') { showResult(); } else { showStep(parseInt(next, 10)); }
+          });
+        });
+
+        var restart = document.getElementById('hc-restart');
+        if (restart) {
+          restart.addEventListener('click', function() {
+            answers = {};
+            var result = document.getElementById('hc-result');
+            if (result) result.classList.remove('visible');
+            document.querySelectorAll('.hc-option').forEach(function(o) { o.classList.remove('selected'); });
+            document.querySelectorAll('.hc-btn-next').forEach(function(b) { b.disabled = true; });
+            showStep(1);
+          });
+        }
+      })();
+
+      // =========================================
+      // ROI CALCULATOR
+      // =========================================
+      (function() {
+        function formatCurrency(n) {
+          if (n >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+          if (n >= 1000) return '$' + Math.round(n / 1000) + 'K';
+          return '$' + n;
+        }
+
+        document.getElementById('roi-calculate').addEventListener('click', function() {
+          var headcount = parseInt(document.getElementById('roi-headcount').value, 10);
+          var salary = parseInt(document.getElementById('roi-salary').value, 10);
+
+          if (!headcount || !salary || headcount < 1 || salary < 10000) {
+            alert('Please enter valid headcount and salary values.');
+            return;
+          }
+
+          var turnoverCost = Math.round(headcount * 0.20 * salary * 0.75);
+
+          var complianceRisk;
+          if (headcount < 25) complianceRisk = 35000;
+          else if (headcount < 50) complianceRisk = 65000;
+          else if (headcount < 100) complianceRisk = 120000;
+          else if (headcount < 200) complianceRisk = 200000;
+          else complianceRisk = 350000;
+
+          var fractionalAnnual = 2500 * 12;
+          var fulltimeLoaded = 143000;
+          var savings = fulltimeLoaded - fractionalAnnual;
+
+          document.getElementById('roi-turnover-val').textContent = formatCurrency(turnoverCost);
+          document.getElementById('roi-compliance-val').textContent = formatCurrency(complianceRisk) + '+';
+          document.getElementById('roi-savings-val').textContent = formatCurrency(savings) + '/yr';
+
+          var results = document.getElementById('roi-results');
+          results.classList.add('visible');
+          document.getElementById('roi-disclaimer').style.display = 'block';
+          document.getElementById('roi-cta').style.display = 'block';
+          results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        ['roi-headcount', 'roi-salary'].forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) el.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') document.getElementById('roi-calculate').click();
+          });
+        });
+      })();
+
     });
+
+  /* =========================================
+     LOCATION POPUP
+  ========================================= */
+  (function() {
+    var STORAGE_KEY = 'ba_popup_dismissed';
+    var popup = document.getElementById('location-popup');
+    var closeBtn = document.getElementById('popup-close');
+    var dismissBtn = document.getElementById('popup-dismiss');
+    var locationSpan = document.getElementById('popup-location');
+    var locationLabel = document.getElementById('popup-location-label');
+    var popupBody = document.getElementById('popup-body');
+
+    if (!popup) return;
+
+    // Don't show if already dismissed this session
+    if (sessionStorage.getItem(STORAGE_KEY)) return;
+
+    function dismissPopup() {
+      popup.classList.add('dismissing');
+      sessionStorage.setItem(STORAGE_KEY, '1');
+      setTimeout(function() {
+        popup.classList.remove('visible', 'dismissing');
+        popup.setAttribute('aria-hidden', 'true');
+      }, 500);
+    }
+
+    function showPopup() {
+      if (sessionStorage.getItem(STORAGE_KEY)) return;
+      popup.classList.add('visible');
+      popup.setAttribute('aria-hidden', 'false');
+    }
+
+    function initPopupWithLocation(city, region) {
+      if (city && region) {
+        locationSpan.textContent = city + ', ' + region;
+        locationLabel.textContent = 'Serving ' + region;
+        popupBody.textContent = 'Businesses in ' + city + ' are investing in fractional HR leadership — a faster, more affordable path than a full-time hire.';
+      } else if (region) {
+        locationSpan.textContent = region;
+        locationLabel.textContent = 'Serving ' + region;
+      }
+    }
+
+    // Fetch location via free IP geolocation (no API key needed)
+    function fetchLocation() {
+      try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://ipapi.co/json/', true);
+        xhr.timeout = 4000;
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            try {
+              var data = JSON.parse(xhr.responseText);
+              if (data && data.city && data.region) {
+                initPopupWithLocation(data.city, data.region_code || data.region);
+              }
+            } catch(e) {}
+          }
+        };
+        xhr.onerror = function() {};
+        xhr.ontimeout = function() {};
+        xhr.send();
+      } catch(e) {}
+    }
+
+    // Show popup after 40% scroll depth (whichever comes first: 12s or 40% scroll)
+    var shown = false;
+    var scrollTimer = null;
+
+    function maybeShow() {
+      if (shown) return;
+      var scrollPct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+      if (scrollPct >= 0.4) {
+        shown = true;
+        clearTimeout(scrollTimer);
+        setTimeout(showPopup, 600);
+      }
+    }
+
+    scrollTimer = setTimeout(function() {
+      if (!shown) {
+        shown = true;
+        showPopup();
+      }
+    }, 12000);
+
+    window.addEventListener('scroll', maybeShow, { passive: true });
+
+    if (closeBtn) closeBtn.addEventListener('click', dismissPopup);
+    if (dismissBtn) dismissBtn.addEventListener('click', dismissPopup);
+
+    // Fetch location data
+    fetchLocation();
+  })();
   </script>
 
 </body>
